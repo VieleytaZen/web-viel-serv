@@ -1,48 +1,34 @@
 backend:
-  name: github
-  repo: VieleytaZen/web-viel-serv # Ganti jika nama repo beda
+  name: git-gateway
   branch: main
 
-# Folder tempat menyimpan gambar yang kamu upload lewat Admin
 media_folder: "assets/img"
 public_folder: "/assets/img"
 
 collections:
-  # --- PENGATURAN PRODUK AFFILIATE ---
   - name: "affiliate"
     label: "Produk Affiliate"
     folder: "jasa/affiliate"
-    extension: "js"
-    format: "json-frontmatter" # Memungkinkan edit file JS sebagai data
+    extension: "json"
     create: true
+    slug: "{{title}}"
     fields:
       - {label: "Nama Produk", name: "title", widget: "string"}
       - {label: "Harga", name: "price", widget: "string"}
-      - {label: "Kategori", name: "category", widget: "select", options: ["Setup", "Aksesoris", "Gadget"]}
-      - {label: "Link Shopee/Affiliate", name: "link", widget: "string"}
+      - {label: "Link Affiliate", name: "link", widget: "string"}
       - {label: "Foto Produk", name: "image", widget: "image"}
 
-  # --- PENGATURAN JASA CODING ---
   - name: "jasa_coding"
     label: "Layanan Jasa Coding"
-    folder: "jasa"
-    extension: "js"
-    format: "json-frontmatter"
+    file: "jasa/data.json" # Kita pakai satu file untuk semua jasa coding
     fields:
-      - {label: "Judul Jasa", name: "title", widget: "string"}
-      - {label: "Deskripsi Singkat", name: "desc", widget: "text"}
-      - {label: "Detail Layanan (HTML)", name: "detail", widget: "code", default_language: "html"}
-      - {label: "Harga Mulai", name: "price", widget: "string"}
-      - {label: "Link WhatsApp", name: "waLink", widget: "string"}
-
-  # --- PENGATURAN JASA CLEANING ---
-  - name: "jasa_cleaning"
-    label: "Layanan Jasa Cleaning"
-    folder: "cleaning"
-    extension: "js"
-    format: "json-frontmatter"
-    fields:
-      - {label: "Nama Paket", name: "title", widget: "string"}
-      - {label: "Harga", name: "price", widget: "string"}
-      - {label: "Deskripsi", name: "desc", widget: "text"}
-      - {label: "Link WhatsApp", name: "waLink", widget: "string"}
+      - name: "digital"
+        label: "Daftar Jasa"
+        widget: "list"
+        fields:
+          - {label: "ID (web-dev/bot-dev)", name: "id", widget: "string"}
+          - {label: "Judul", name: "title", widget: "string"}
+          - {label: "Deskripsi", name: "desc", widget: "text"}
+          - {label: "Detail HTML", name: "detail", widget: "text"}
+          - {label: "Harga", name: "price", widget: "string"}
+          - {label: "Link WA", name: "waLink", widget: "string"}
