@@ -71,7 +71,7 @@
             <div class="hidden md:flex items-center gap-8 font-bold text-sm tracking-wide text-slate-600 uppercase">
                 <a href="#jasa" class="nav-link">Layanan Jasa</a>
                 <a href="affiliate/index.html" class="nav-link text-indigo-600">Produk Affiliate ✨</a>
-                <a href="https://wa.me/62821336922" target="_blank" class="bg-indigo-600 text-white px-6 py-2.5 rounded-full hover:bg-indigo-700 transition shadow-lg shadow-indigo-100">Konsultasi</a>
+                <a href="https://wa.me/6282133692292" target="_blank" class="bg-indigo-600 text-white px-6 py-2.5 rounded-full hover:bg-indigo-700 transition shadow-lg shadow-indigo-100">Konsultasi</a>
             </div>
         </div>
     </nav>
@@ -86,7 +86,6 @@
                 Menyediakan jasa pembuatan website modern dan automasi bot dengan performa tinggi untuk mendukung bisnismu.
             </p>
         </div>
-        <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-96 h-96 bg-indigo-50 rounded-full blur-3xl opacity-50"></div>
     </header>
 
     <section id="jasa" class="max-w-6xl mx-auto py-24 px-6">
@@ -110,24 +109,33 @@
     </div>
 
     <footer class="bg-white py-16 text-center border-t border-slate-100">
-        <p class="text-slate-400 font-bold text-xs uppercase tracking-widest">&copy; 2026 Crafted by Viel Digital</p>
+        <p class="text-slate-400 font-bold text-xs uppercase tracking-widest">&copy; 2026 Viel Service | by Viel</p>
     </footer>
 
     <script>
         function renderJasa() {
             const container = document.getElementById('jasa-grid');
-            if(!container || typeof DB_SERVICES === 'undefined') return;
+            // Cek apakah data tersedia
+            if(!container || typeof DB_SERVICES === 'undefined' || !DB_SERVICES.digital) {
+                console.error("Data DB_SERVICES.digital tidak ditemukan!");
+                return;
+            }
 
             let html = '';
             DB_SERVICES.digital.forEach((item, index) => {
+                // Logika Ikon agar tidak undefined
+                let iconSvg = '';
+                if(item.id === 'web-dev') {
+                    iconSvg = '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>';
+                } else {
+                    iconSvg = '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>';
+                }
+
                 html += `
                     <div class="card-modern bg-white p-10 rounded-[3rem] border border-slate-100 shadow-sm animate__animated animate__fadeInUp" style="animation-delay: ${index * 0.1}s">
                         <div class="flex justify-between items-start mb-8">
                             <div class="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600">
-                                ${item.id === 'web-dev' ? 
-                                    '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>' : 
-                                    '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>'
-                                }
+                                ${iconSvg}
                             </div>
                             <span class="text-sm font-bold text-indigo-600 bg-indigo-50 px-4 py-1 rounded-full">${item.price}</span>
                         </div>
@@ -159,6 +167,7 @@
             document.getElementById('modal-container').classList.add('hidden');
         }
 
+        // Jalankan render setelah halaman siap
         document.addEventListener('DOMContentLoaded', renderJasa);
     </script>
 </body>
