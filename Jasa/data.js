@@ -1,38 +1,35 @@
+// jasa/data.js
 const DB_SERVICES = {
     digital: [
         {
-            id: 'jasa-design',
-            category: 'Design',
-            title: 'Social Media Design ✨',
-            desc: 'Konten Instagram & TikTok yang estetik untuk menaikkan branding kamu.',
-            detail: 'Paket termasuk:<br>• 10 Feed Design<br>• Custom Color Palette<br>• Caption Writing<br>• 3x Revisi.',
-            waLink: 'https://wa.me/62821336922?text=Halo, tanya jasa desain'
+            id: 'web-dev',
+            title: 'Jasa Pembuatan Web 🌐',
+            desc: 'Landing page, Company Profile, atau Portfolio modern yang responsif dan SEO friendly.',
+            detail: 'Paket termasuk:<br>• Desain UI/UX Modern<br>• Integrasi Domain & Hosting<br>• Optimasi Kecepatan (Lighthouse 90+)<br>• Gratis SSL & Setup Cloudflare.',
+            price: 'Mulai Rp 500k',
+            waLink: 'https://wa.me/62821336922?text=Halo, saya ingin tanya jasa pembuatan Web'
         },
         {
-            id: 'jasa-web',
-            category: 'Web',
-            title: 'Landing Page Kilat 🚀',
-            desc: 'Website satu halaman yang cepat, responsif, dan siap jualan.',
-            detail: 'Paket termasuk:<br>• Desain Modern (Tailwind)<br>• Mobile Friendly<br>• Integrasi WhatsApp Button<br>• Optimasi Kecepatan.',
-            waLink: 'https://wa.me/62821336922?text=Halo, tanya jasa web'
+            id: 'bot-dev',
+            title: 'Jasa Pembuatan Bot 🤖',
+            desc: 'Automasi tugas dengan Bot Telegram, WhatsApp, atau Discord untuk bisnismu.',
+            detail: 'Fitur Bot:<br>• Auto-reply Interaktif<br>• Integrasi Database (MySQL/Spreadsheet)<br>• Notifikasi Real-time<br>• Maintenance 1 Bulan.',
+            price: 'Mulai Rp 300k',
+            waLink: 'https://wa.me/62821336922?text=Halo, saya ingin tanya jasa pembuatan Bot'
         }
     ],
     products: [
         {
-            id: 'p1',
-            category: 'Gadget',
-            title: 'Tablet Kerja Produktif Gen 10',
-            image: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=500',
-            price: 'Rp 4.xxx.xxx',
-            link: '#'
+            title: 'Mechanical Keyboard RGB',
+            price: 'Rp 450.000',
+            image: 'https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=500',
+            link: 'https://shope.ee/contoh1'
         },
         {
-            id: 'p2',
-            category: 'Aksesoris',
-            title: 'Mouse Wireless Silent Click',
-            image: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?q=80&w=500',
-            price: 'Rp 1xx.xxx',
-            link: '#'
+            title: 'Mouse Gaming Wireless',
+            price: 'Rp 299.000',
+            image: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=500',
+            link: 'https://shope.ee/contoh2'
         }
     ]
 };

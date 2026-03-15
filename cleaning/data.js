@@ -7,7 +7,7 @@ const DB_SERVICES = {
             desc: 'Pembersihan rutin standar untuk menjaga kamar kost tetap nyaman setiap hari.',
             detail: 'Rincian pengerjaan (±45 Menit):<br>• Sapu & Pel seluruh lantai<br>• Lap debu meja & kursi<br>• Merapikan tempat tidur<br>• Membuang sampah harian<br>• Semprot pengharum ruangan.',
             price: 'Rp 25.000',
-            waLink: 'https://wa.me/62821336922?text=Halo Jasa Clean, saya ingin pesan Paket Hemat'
+            waLink: 'https://wa.me/6282133692292?text=Halo Jasa Clean, saya ingin pesan Paket Hemat'
         },
         {
             id: 'deep',
@@ -23,7 +23,7 @@ const DB_SERVICES = {
             desc: 'Pembersihan total sebelum kamu masuk atau setelah keluar dari kamar kost.',
             detail: 'Rincian pengerjaan:<br>• Semua fitur Deep Cleaning<br>• Pembersihan sisa-sisa barang/debu renovasi<br>• Disinfektan seluruh area<br>• Pengecekan fungsi lampu & air.',
             price: 'Rp 120.000',
-            waLink: 'https://wa.me/62821336922?text=Halo Jasa Clean, saya ingin pesan Paket Pindahan'
+            waLink: 'https://wa.me/6282133692292?text=Halo Jasa Clean, saya ingin pesan Paket Pindahan'
         }
     ]
 };
