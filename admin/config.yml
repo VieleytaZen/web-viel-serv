@@ -20,7 +20,7 @@ collections:
 
   - name: "jasa_coding"
     label: "Layanan Jasa Coding"
-    file: "jasa/data.json" # Kita pakai satu file untuk semua jasa coding
+    file: "jasa/data.json"
     fields:
       - name: "digital"
         label: "Daftar Jasa"
