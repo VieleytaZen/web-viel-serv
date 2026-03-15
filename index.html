@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Viel Home | Solusi Digital & Jasa Bersih Kost</title>
+    
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    
     <meta name="description" content="Portal layanan terpadu Viel: Jasa desain grafis, pembuatan website, rekomendasi gadget, dan jasa pembersihan kost profesional.">
     <meta name="keywords" content="Viel Ecosystem, Jasa Digital, Jasa Bersih Kost, Produk Rekomendasi">
     
@@ -47,3 +50,24 @@
                     <p class="text-slate-400 mb-8 leading-relaxed">Jasa kebersihan kamar kost profesional.</p>
                     <span class="text-purple-400 font-bold">CEK JADWAL →</span>
                 </div>
+            </a>
+        </div>
+    </main>
+
+    <footer class="text-center py-10 text-slate-500 text-sm">
+        © 2026 Viel Service | by Viel
+    </footer>
+
+    <script>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", user => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => {
+              document.location.href = "/admin/";
+            });
+          }
+        });
+      }
+    </script>
+</body>
+</html>
