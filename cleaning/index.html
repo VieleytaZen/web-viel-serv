@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KostClean | Jasa Bersih Kost Profesional Murah</title>
+    <meta name="description" content="Kamar kost kotor? KostClean solusinya! Jasa pembersihan kamar kost profesional mulai Rp 25.000.">
+    <meta name="keywords" content="jasa bersih kost, cleaning service kost, sikat kamar mandi kost, kost bersih">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <script src="data.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
+        .service-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(37, 99, 235, 0.1); }
+    </style>
+</head>
+<body class="bg-[#f8fafc] text-slate-900">
+    <nav class="sticky top-0 z-[100] py-4 bg-white/80 backdrop-blur-md border-b">
+        <div class="max-w-6xl mx-auto px-6 flex justify-between items-center">
+            <a href="../index.html" class="font-bold text-slate-500 hover:text-blue-600">← Kembali</a>
+            <span class="text-xl font-bold text-blue-600">KostClean</span>
+        </div>
+    </nav>
+
+    <header class="py-24 text-center px-6">
+        <h2 class="text-5xl md:text-6xl font-extrabold mb-6 leading-tight">Kost Bersih, <br><span class="text-blue-600 text-transparent bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text">Istirahat Jadi Puas.</span></h2>
+        <p class="text-slate-500 max-w-2xl mx-auto text-lg">Jasa kebersihan kamar kost paling detail di kelasnya.</p>
+    </header>
+
+    <section class="max-w-6xl mx-auto py-12 px-6">
+        <div id="cleaning-grid" class="grid md:grid-cols-3 gap-8"></div>
+    </section>
+
+    <div id="modal-cleaning" class="fixed inset-0 bg-slate-900/60 z-[200] hidden flex items-center justify-center p-4 backdrop-blur-md text-center">
+        <div class="animate__animated animate__zoomIn bg-white rounded-[2.5rem] max-w-lg w-full p-10 relative shadow-2xl">
+            <button onclick="closeCleaningModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-900 text-3xl transition">&times;</button>
+            <div id="cleaning-content"></div>
+            <div class="mt-10"><a id="cleaning-cta" href="#" target="_blank" class="block w-full bg-blue-600 text-white py-5 rounded-2xl font-extrabold">Pesan via WhatsApp</a></div>
+        </div>
+    </div>
+
+    <script>
+        function renderCleaning() {
+            const container = document.getElementById('cleaning-grid');
+            if(!container || !DB_SERVICES.cleaning) return;
+            let html = '';
+            DB_SERVICES.cleaning.forEach((item, index) => {
+                const isDeep = item.id === 'deep';
+                html += `
+                    <div class="service-card transition-all duration-300 p-10 rounded-[2.5rem] ${isDeep ? 'bg-blue-600 shadow-2xl text-white' : 'bg-white border border-slate-100 shadow-sm'}">
+                        <h3 class="text-2xl font-extrabold mb-4">${item.title}</h3>
+                        <p class="${isDeep ? 'text-blue-100' : 'text-slate-500'} mb-8 leading-relaxed">${item.desc}</p>
+                        <div class="text-3xl font-black mb-8">${item.price}</div>
+                        <button onclick="openCleaningModal('${item.id}')" class="w-full py-4 rounded-2xl font-bold ${isDeep ? 'bg-white text-blue-600' : 'bg-slate-900 text-white'}">Detail</button>
+                    </div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function openCleaningModal(id) {
+            const item = DB_SERVICES.cleaning.find(c => c.id === id);
+            if(item) {
+                document.getElementById('cleaning-content').innerHTML = `<h2 class="text-3xl font-black mb-6">${item.title}</h2><div class="text-slate-600">${item.detail}</div>`;
+                document.getElementById('cleaning-cta').href = item.waLink;
+                document.getElementById('modal-cleaning').classList.remove('hidden');
+            }
+        }
+        function closeCleaningModal() { document.getElementById('modal-cleaning').classList.add('hidden'); }
+        document.addEventListener('DOMContentLoaded', renderCleaning);
+    </script>
+</body>
+</html>

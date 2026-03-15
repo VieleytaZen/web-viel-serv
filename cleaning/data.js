@@ -1,0 +1,29 @@
+// cleaning/data.js
+const DB_SERVICES = {
+    cleaning: [
+        {
+            id: 'hemat',
+            title: 'Paket Hemat ✨',
+            desc: 'Pembersihan rutin standar untuk menjaga kamar kost tetap nyaman setiap hari.',
+            detail: 'Rincian pengerjaan (±45 Menit):<br>• Sapu & Pel seluruh lantai<br>• Lap debu meja & kursi<br>• Merapikan tempat tidur<br>• Membuang sampah harian<br>• Semprot pengharum ruangan.',
+            price: 'Rp 25.000',
+            waLink: 'https://wa.me/62821336922?text=Halo Jasa Clean, saya ingin pesan Paket Hemat'
+        },
+        {
+            id: 'deep',
+            title: 'Deep Cleaning 💎',
+            desc: 'Pembersihan menyeluruh hingga ke noda membandel. Cocok untuk kamar yang lama tidak terurus.',
+            detail: 'Rincian pengerjaan (±2-3 Jam):<br>• Sikat kerak lantai & dinding KM<br>• Pembersihan wastafel & kloset<br>• Lap kaca & jendela kamar<br>• Vacuum debu sela-sela kasur<br>• Pembersihan detail kipas/AC.',
+            price: 'Rp 75.000',
+            waLink: 'https://wa.me/6282133692292?text=Halo Jasa Clean, saya ingin pesan Paket Deep Clean'
+        },
+        {
+            id: 'pindah',
+            title: 'Paket Pindahan 📦',
+            desc: 'Pembersihan total sebelum kamu masuk atau setelah keluar dari kamar kost.',
+            detail: 'Rincian pengerjaan:<br>• Semua fitur Deep Cleaning<br>• Pembersihan sisa-sisa barang/debu renovasi<br>• Disinfektan seluruh area<br>• Pengecekan fungsi lampu & air.',
+            price: 'Rp 120.000',
+            waLink: 'https://wa.me/62821336922?text=Halo Jasa Clean, saya ingin pesan Paket Pindahan'
+        }
+    ]
+};

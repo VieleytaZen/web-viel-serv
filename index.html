@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viel Home | Solusi Digital & Jasa Bersih Kost</title>
+    <meta name="description" content="Portal layanan terpadu Viel: Jasa desain grafis, pembuatan website, rekomendasi gadget, dan jasa pembersihan kost profesional.">
+    <meta name="keywords" content="Viel Ecosystem, Jasa Digital, Jasa Bersih Kost, Produk Rekomendasi">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        @keyframes floating { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-15px); } }
+        .float { animation: floating 4s ease-in-out infinite; }
+    </style>
+</head>
+<body class="bg-[#0f172a] text-slate-200 min-h-screen overflow-x-hidden">
+    <main class="relative z-10 container mx-auto px-6 py-20 min-h-screen flex flex-col items-center justify-center">
+        <header class="text-center mb-16 animate__animated animate__fadeInDown">
+            <h1 class="text-6xl md:text-7xl font-extrabold tracking-tighter mb-6 bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Viel Services
+            </h1>
+            <p class="text-slate-400 text-lg md:text-xl max-w-xl mx-auto leading-relaxed">
+                Pilih layanan ala profesional yang kamu butuhkan hari ini.
+            </p>
+        </header>
+
+        <div class="grid md:grid-cols-2 gap-8 w-full max-w-5xl">
+            <a href="jasa/index.html" class="animate__animated animate__fadeInLeft group relative block p-[1px] rounded-[2.5rem] overflow-hidden transition-all duration-500 hover:scale-[1.02]">
+                <div class="absolute inset-0 bg-gradient-to-br from-indigo-500 to-transparent opacity-30 group-hover:opacity-100 transition-opacity"></div>
+                <div class="glass relative bg-[#1e293b]/90 rounded-[2.5rem] p-10 h-full text-center md:text-left">
+                    <span class="text-4xl float block mb-8">🚀</span>
+                    <h2 class="text-3xl font-bold mb-4 text-white">Digital & Affiliate</h2>
+                    <p class="text-slate-400 mb-8 leading-relaxed">Code, Web, dan Rekomendasi Produk.</p>
+                    <span class="text-indigo-400 font-bold">KUNJUNGI SITUS →</span>
+                </div>
+            </a>
+
+            <a href="cleaning/index.html" class="animate__animated animate__fadeInRight group relative block p-[1px] rounded-[2.5rem] overflow-hidden transition-all duration-500 hover:scale-[1.02]">
+                <div class="absolute inset-0 bg-gradient-to-br from-purple-500 to-transparent opacity-30 group-hover:opacity-100 transition-opacity"></div>
+                <div class="glass relative bg-[#1e293b]/90 rounded-[2.5rem] p-10 h-full text-center md:text-left">
+                    <span class="text-4xl float block mb-8">🧹</span>
+                    <h2 class="text-3xl font-bold mb-4 text-white">Kost Cleaning</h2>
+                    <p class="text-slate-400 mb-8 leading-relaxed">Jasa kebersihan kamar kost profesional.</p>
+                    <span class="text-purple-400 font-bold">CEK JADWAL →</span>
+                </div>
