@@ -7,45 +7,34 @@ public_folder: "/assets/img"
 
 collections:
   - name: "affiliate"
-    label: "🛒 Produk Affiliate"
+    label: "Produk Affiliate"
     folder: "jasa/affiliate"
     extension: "json"
     create: true
-    slug: "{{title}}"
-    summary: "{{title}} - {{price}}"
     fields:
       - {label: "Nama Produk", name: "title", widget: "string"}
       - {label: "Harga", name: "price", widget: "string"}
-      - {label: "Kategori", name: "category", widget: "select", options: ["Setup", "Aksesoris", "Gadget"]}
-      - {label: "Link Shopee", name: "link", widget: "string"}
-      - {label: "Foto Produk", name: "image", widget: "image"}
+      - {label: "Link", name: "link", widget: "string"}
+      - {label: "Foto", name: "image", widget: "image"}
 
   - name: "jasa_coding"
-    label: "💻 Layanan Jasa Coding"
+    label: "Jasa Coding"
     file: "jasa/data.json"
     fields:
       - name: "digital"
-        label: "Daftar Jasa"
+        label: "List Jasa"
         widget: "list"
         fields:
-          - {label: "ID", name: "id", widget: "string"}
-          - {label: "Judul", name: "title", widget: "string"}
-          - {label: "Deskripsi", name: "desc", widget: "text"}
-          - {label: "Detail (HTML)", name: "detail", widget: "code", default_language: "html"}
-          - {label: "Harga", name: "price", widget: "string"}
-          - {label: "Link WA", name: "waLink", widget: "string"}
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Price", name: "price", widget: "string"}
 
   - name: "jasa_cleaning"
-    label: "🧹 Layanan Jasa Cleaning"
+    label: "Jasa Cleaning"
     file: "cleaning/data.json"
     fields:
       - name: "cleaning"
-        label: "Daftar Paket Cleaning"
+        label: "List Cleaning"
         widget: "list"
         fields:
-          - {label: "ID", name: "id", widget: "string"}
-          - {label: "Nama Paket", name: "title", widget: "string"}
-          - {label: "Deskripsi", name: "desc", widget: "text"}
-          - {label: "Detail", name: "detail", widget: "code", default_language: "html"}
-          - {label: "Harga", name: "price", widget: "string"}
-          - {label: "Link WA", name: "waLink", widget: "string"}
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Price", name: "price", widget: "string"}
