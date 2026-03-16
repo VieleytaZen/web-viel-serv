@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; }
-        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.4); }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.5); }
         .btn-gradient { background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); }
     </style>
 </head>
@@ -34,64 +34,78 @@
 
     <div id="modal-container" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-6">
         <div class="bg-white rounded-[2.5rem] max-w-xl w-full p-10 relative shadow-2xl animate__animated animate__zoomIn">
-            <button onclick="closeModal()" class="absolute top-6 right-6 text-slate-300 hover:text-slate-900 text-3xl">&times;</button>
+            <button onclick="closeModal()" class="absolute top-6 right-6 text-slate-300 hover:text-slate-900 text-3xl transition">&times;</button>
             <div id="modal-content"></div>
             <div class="mt-8">
-                <a id="modal-cta" href="#" target="_blank" class="block w-full btn-gradient text-white text-center py-4 rounded-2xl font-bold shadow-lg hover:opacity-90 transition">Diskusikan Project Sekarang</a>
+                <a id="modal-cta" href="#" target="_blank" class="block w-full btn-gradient text-white text-center py-4 rounded-2xl font-bold shadow-lg hover:opacity-90 transition transform hover:scale-[1.02]">Diskusikan Project Sekarang</a>
             </div>
         </div>
     </div>
 
     <script>
+        window.currentData = [];
+
         async function renderJasa() {
-    const container = document.getElementById('jasa-grid');
-    try {
-        // Tambahkan timestamp agar browser tidak mengambil cache lama
-        const response = await fetch('data.json?v=' + Date.now());
-        const data = await response.json();
-        
-        // Decap CMS menyimpan list di dalam key 'digital' sesuai config.yml
-        window.currentData = data.digital || []; 
+            const container = document.getElementById('jasa-grid');
+            try {
+                // Anti-cache dengan timestamp
+                const response = await fetch('data.json?v=' + Date.now());
+                if (!response.ok) throw new Error("File data.json tidak ditemukan");
+                
+                const data = await response.json();
+                window.currentData = data.digital || []; 
 
-        let html = '';
-        window.currentData.forEach((item, index) => {
-            // Logika icon: jika ID mengandung 'web' kasih bola dunia, selain itu robot
-            const icon = item.id.includes('web') ? '🌐' : '🤖';
-            
-            html += `
-                <div class="glass-card p-10 rounded-[3rem] hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 animate__animated animate__fadeInUp" style="animation-delay: ${index * 0.1}s">
-                    <div class="flex justify-between items-start mb-8">
-                        <div class="text-5xl">${icon}</div>
-                        <span class="bg-indigo-50 text-indigo-600 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest">${item.price}</span>
-                    </div>
-                    <h3 class="text-2xl font-black text-slate-900 mb-4">${item.title}</h3>
-                    <p class="text-slate-500 mb-8 leading-relaxed">${item.desc || item.descSingkat || ''}</p>
-                    <button onclick="openModal('${item.id}')" class="font-bold text-indigo-600 group">
-                        Cek Detail <span class="inline-block group-hover:translate-x-1 transition-transform">→</span>
-                    </button>
+                let html = '';
+                window.currentData.forEach((item, index) => {
+                    // Penanganan Error: Pastikan ID ada sebelum menjalankan .includes()
+                    const safeId = (item.id || "service").toLowerCase();
+                    const icon = safeId.includes('web') ? '🌐' : '🤖';
+                    
+                    html += `
+                        <div class="glass-card p-10 rounded-[3rem] hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 animate__animated animate__fadeInUp" style="animation-delay: ${index * 0.1}s">
+                            <div class="flex justify-between items-start mb-8">
+                                <div class="text-5xl">${icon}</div>
+                                <span class="bg-indigo-50 text-indigo-600 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest">${item.price || 'TBA'}</span>
+                            </div>
+                            <h3 class="text-2xl font-black text-slate-900 mb-4">${item.title || 'Untitled Service'}</h3>
+                            <p class="text-slate-500 mb-8 leading-relaxed">${item.desc || ''}</p>
+                            <button onclick="openModal('${item.id}')" class="font-bold text-indigo-600 hover:text-indigo-800 transition flex items-center gap-2 group">
+                                Cek Detail <span class="inline-block group-hover:translate-x-1 transition-transform">→</span>
+                            </button>
+                        </div>`;
+                });
+                
+                container.innerHTML = html || "<p class='col-span-full text-center py-20 text-slate-400 font-medium uppercase tracking-widest text-xs'>Belum ada layanan tersedia.</p>";
+            } catch (e) { 
+                console.error("Error memuat layanan:", e);
+                container.innerHTML = `<div class='col-span-full text-center py-20 bg-red-50 rounded-[3rem] border border-red-100'>
+                    <p class='text-red-500 font-bold'>Gagal memuat database.</p>
+                    <p class='text-red-400 text-xs mt-2'>Error: ${e.message}</p>
                 </div>`;
-        });
-        
-        container.innerHTML = html || "<p class='col-span-full text-center text-slate-400'>Belum ada layanan coding tersedia.</p>";
-    } catch (e) { 
-        console.error("Gagal memuat data coding:", e);
-        container.innerHTML = "<p class='col-span-full text-center text-red-400'>Gagal memuat data.</p>";
-    }
-}
+            }
+        }
 
-function openModal(id) {
-    const item = window.currentData.find(d => d.id === id);
-    if(item) {
-        document.getElementById('modal-content').innerHTML = `
-            <h2 class="text-3xl font-black text-slate-900 mb-6">${item.title}</h2>
-            <div class="bg-slate-50 p-6 rounded-2xl text-slate-600 leading-relaxed whitespace-pre-line">${item.detail}</div>
-        `;
-        document.getElementById('modal-cta').href = item.waLink;
-        document.getElementById('modal-container').classList.remove('hidden');
-    }
-}
-        function closeModal() { document.getElementById('modal-container').classList.add('hidden'); }
-        window.onload = renderJasa;
+        function openModal(id) {
+            const item = window.currentData.find(d => d.id === id);
+            if(item) {
+                document.getElementById('modal-content').innerHTML = `
+                    <div class="mb-2 uppercase text-[10px] font-black tracking-[0.2em] text-indigo-500">Service Detail</div>
+                    <h2 class="text-3xl font-black text-slate-900 mb-6">${item.title}</h2>
+                    <div class="bg-slate-50 p-8 rounded-[2rem] text-slate-600 leading-relaxed whitespace-pre-line text-sm border border-slate-100">${item.detail || 'Tidak ada detail tambahan.'}</div>
+                `;
+                document.getElementById('modal-cta').href = item.waLink || 'https://wa.me/yournumber';
+                document.getElementById('modal-container').classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; // Stop scroll saat modal buka
+            }
+        }
+
+        function closeModal() { 
+            document.getElementById('modal-container').classList.add('hidden'); 
+            document.body.style.overflow = 'auto'; // Aktifkan scroll lagi
+        }
+
+        // Jalankan render saat halaman siap
+        document.addEventListener('DOMContentLoaded', renderJasa);
     </script>
 </body>
 </html>
