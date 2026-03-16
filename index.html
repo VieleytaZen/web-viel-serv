@@ -14,7 +14,17 @@
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0f172a; }
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
         
-        /* Sidebar Slim Styling */
+        /* Particles Container */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        /* Sidebar Styling */
         #sidebar { 
             width: 60px;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -33,9 +43,15 @@
 
         .menu-text { opacity: 0; transition: opacity 0.3s; white-space: nowrap; }
         #sidebar:hover .menu-text, #sidebar.locked .menu-text, #sidebar.mobile-open .menu-text { opacity: 1; }
+
+        /* Custom Scrollbar for Sidebar */
+        .custom-scrollbar::-webkit-scrollbar { width: 2px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #312e81; }
     </style>
 </head>
-<body class="text-slate-200 min-h-screen flex">
+<body class="text-slate-200 min-h-screen flex overflow-x-hidden">
+
+    <div id="particles-js"></div>
 
     <button onclick="toggleMobileMenu()" class="md:hidden fixed top-6 left-6 z-[110] bg-indigo-600 p-3 rounded-xl shadow-lg">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -43,7 +59,7 @@
         </svg>
     </button>
 
-    <nav id="sidebar" class="fixed left-0 top-0 h-full z-[100] bg-[#1e293b]/95 border-r border-slate-800 flex flex-col shadow-2xl overflow-y-auto">
+    <nav id="sidebar" class="fixed left-0 top-0 h-full z-[100] bg-[#1e293b]/95 border-r border-slate-800 flex flex-col shadow-2xl overflow-y-auto custom-scrollbar">
         <div class="flex items-center justify-between p-4 mb-6">
             <div class="flex items-center gap-3">
                 <div class="bg-indigo-500 min-w-[32px] h-8 rounded-lg flex items-center justify-center text-white font-black">V</div>
@@ -114,33 +130,53 @@
                         Viel Services lahir untuk mempermudah hidup Anda. Kami percaya efisiensi tidak hanya soal baris kode koding, tapi juga soal kualitas lingkungan tinggal dan ketepatan pilihan produk harian.
                     </p>
                     <div class="pt-4">
-                        <button onclick="toggleMobileMenu()" class="md:hidden bg-indigo-600 text-white px-8 py-3 rounded-2xl font-bold shadow-lg shadow-indigo-500/20">Explore Menu</button>
+                        <button onclick="toggleMobileMenu()" class="md:hidden bg-indigo-600 text-white px-8 py-3 rounded-2xl font-bold shadow-lg">Explore Menu</button>
                     </div>
                 </div>
                 
                 <div class="grid gap-4">
                     <div class="glass p-8 rounded-[2rem] border-l-4 border-indigo-500 hover:bg-white/5 transition duration-300">
-                        <h4 class="font-bold text-white mb-2 text-lg">Digital Innovation</h4>
-                        <p class="text-xs text-slate-500 leading-relaxed">Membangun infrastruktur digital cerdas melalui bot automasi dan website berperforma tinggi.</p>
+                        <h4 class="font-bold text-white mb-2 text-lg uppercase tracking-tighter">Digital Innovation</h4>
+                        <p class="text-[11px] text-slate-500 leading-relaxed uppercase tracking-widest">Bot automasi & website berperforma tinggi.</p>
                     </div>
                     <div class="glass p-8 rounded-[2rem] border-l-4 border-purple-500 hover:bg-white/5 transition duration-300">
-                        <h4 class="font-bold text-white mb-2 text-lg">Essential Comfort</h4>
-                        <p class="text-xs text-slate-500 leading-relaxed">Memberikan standar kenyamanan baru bagi hunian Anda melalui jasa pembersihan profesional.</p>
+                        <h4 class="font-bold text-white mb-2 text-lg uppercase tracking-tighter">Essential Comfort</h4>
+                        <p class="text-[11px] text-slate-500 leading-relaxed uppercase tracking-widest">Layanan kebersihan kost profesional.</p>
                     </div>
                     <div class="glass p-8 rounded-[2rem] border-l-4 border-pink-500 hover:bg-white/5 transition duration-300">
-                        <h4 class="font-bold text-white mb-2 text-lg">Curated Gear</h4>
-                        <p class="text-xs text-slate-500 leading-relaxed">Menyaring produk gadget dan fashion terbaik untuk menunjang produktivitas gaya hidup Anda.</p>
+                        <h4 class="font-bold text-white mb-2 text-lg uppercase tracking-tighter">Curated Gear</h4>
+                        <p class="text-[11px] text-slate-500 leading-relaxed uppercase tracking-widest">Rekomendasi gadget & style pilihan.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <footer class="text-center mt-24 text-slate-600 text-xs tracking-[0.3em] uppercase">
+        <footer class="text-center mt-24 text-slate-600 text-[10px] tracking-[0.5em] uppercase">
             © 2026 Viel Service | Elevating Your Standard
         </footer>
     </main>
 
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
+        // Konfigurasi Partikel
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#6366f1" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.2, "random": true },
+                "size": { "value": 3, "random": true },
+                "line_linked": { "enable": true, "distance": 150, "color": "#6366f1", "opacity": 0.1, "width": 1 },
+                "move": { "enable": true, "speed": 1, "direction": "none", "random": true, "straight": false, "out_mode": "out", "bounce": false }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
+                "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 0.5 } } }
+            },
+            "retina_detect": true
+        });
+
         function toggleMobileMenu() {
             const sidebar = document.getElementById('sidebar');
             sidebar.classList.toggle('mobile-open');

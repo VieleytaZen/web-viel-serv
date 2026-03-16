@@ -1,13 +1,17 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: VieleytaZen/web-viel-serv
   branch: main
+
+local_backend: true
 
 media_folder: "assets/img"
 public_folder: "/assets/img"
 
 collections:
   - name: "affiliate"
-    label: "Produk Affiliate"
+    label: "🛒 Produk Affiliate"
+    # Menggunakan folder karena kamu ingin menambah banyak file produk
     folder: "jasa/affiliate"
     extension: "json"
     create: true
@@ -15,12 +19,14 @@ collections:
     fields:
       - {label: "Nama Produk", name: "title", widget: "string"}
       - {label: "Harga", name: "price", widget: "string"}
-      - {label: "Kategori", name: "category", widget: "select", options: ["Setup", "Gadget", "Aksesoris"]}
+      - {label: "Kategori", name: "category", widget: "select", options: ["Digital", "Pakaian"]}
+      - {label: "Sub-Kategori", name: "sub", widget: "select", options: ["Hp", "Laptop", "Aksesoris", "Baju", "Hoodie"]}
       - {label: "Link Shopee", name: "link", widget: "string"}
       - {label: "Foto Produk", name: "image", widget: "image"}
 
   - name: "jasa_coding"
-    label: "Jasa Coding"
+    label: "💻 Jasa Coding"
+    # Menggunakan files karena merujuk ke satu file data.json saja
     files:
       - label: "Data Jasa Coding"
         name: "jasa_coding"
@@ -30,15 +36,15 @@ collections:
             label: "List Jasa"
             widget: "list"
             fields:
-              - {label: "ID (PENTING: Tanpa Spasi, misal: web-dev)", name: "id", widget: "string"}
+              - {label: "ID (Penting: web-dev/bot-dev)", name: "id", widget: "string"}
               - {label: "Title", name: "title", widget: "string"}
-              - {label: "Deskripsi Singkat", name: "desc", widget: "string"}
-              - {label: "Detail Layanan (HTML)", name: "detail", widget: "text"}
+              - {label: "Desc Singkat", name: "desc", widget: "string"}
+              - {label: "Detail (HTML)", name: "detail", widget: "text"}
               - {label: "Price", name: "price", widget: "string"}
               - {label: "Link WA", name: "waLink", widget: "string"}
 
   - name: "jasa_cleaning"
-    label: "Jasa Cleaning"
+    label: "🧹 Jasa Cleaning"
     files:
       - label: "Data Cleaning"
         name: "jasa_cleaning"
@@ -48,9 +54,9 @@ collections:
             label: "List Cleaning"
             widget: "list"
             fields:
-              - {label: "ID (PENTING: misal: paket-hemat)", name: "id", widget: "string"}
-              - {label: "Nama Paket", name: "title", widget: "string"}
-              - {label: "Deskripsi Singkat", name: "desc", widget: "string"}
-              - {label: "Detail (HTML)", name: "detail", widget: "text"}
+              - {label: "ID", name: "id", widget: "string"}
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Desc Singkat", name: "desc", widget: "string"}
+              - {label: "Detail", name: "detail", widget: "text"}
               - {label: "Price", name: "price", widget: "string"}
               - {label: "Link WA", name: "waLink", widget: "string"}
