@@ -26,7 +26,7 @@ collections:
         label: "Daftar Jasa"
         widget: "list"
         fields:
-          - {label: "ID (web-dev/bot-dev)", name: "id", widget: "string"}
+          - {label: "ID", name: "id", widget: "string"}
           - {label: "Judul", name: "title", widget: "string"}
           - {label: "Deskripsi", name: "desc", widget: "text"}
           - {label: "Detail HTML", name: "detail", widget: "text"}
@@ -41,9 +41,9 @@ collections:
         label: "Daftar Paket Cleaning"
         widget: "list"
         fields:
-          - {label: "ID (hemat/deep/pindah)", name: "id", widget: "string"}
+          - {label: "ID", name: "id", widget: "string"}
           - {label: "Nama Paket", name: "title", widget: "string"}
           - {label: "Deskripsi", name: "desc", widget: "text"}
-          - {label: "Detail (HTML)", name: "detail", widget: "text"}
+          - {label: "Detail", name: "detail", widget: "text"}
           - {label: "Harga", name: "price", widget: "string"}
           - {label: "Link WA", name: "waLink", widget: "string"}
