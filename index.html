@@ -11,23 +11,21 @@
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0f172a; }
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
         
         /* Sidebar Slim Styling */
         #sidebar { 
-            width: 60px; /* Lebih ramping */
+            width: 60px;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             overflow-x: hidden;
         }
         
-        /* Desktop Hover & Lock */
         @media (min-width: 768px) {
             #sidebar:hover:not(.locked) { width: 240px; }
             #sidebar.locked { width: 240px; }
         }
 
-        /* Mobile State */
         @media (max-width: 767px) {
             #sidebar { width: 0; padding-left: 0; padding-right: 0; }
             #sidebar.mobile-open { width: 260px; padding: 1rem; }
@@ -35,12 +33,9 @@
 
         .menu-text { opacity: 0; transition: opacity 0.3s; white-space: nowrap; }
         #sidebar:hover .menu-text, #sidebar.locked .menu-text, #sidebar.mobile-open .menu-text { opacity: 1; }
-
-        @keyframes floating { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-15px); } }
-        .float { animation: floating 4s ease-in-out infinite; }
     </style>
 </head>
-<body class="bg-[#0f172a] text-slate-200 min-h-screen flex">
+<body class="text-slate-200 min-h-screen flex">
 
     <button onclick="toggleMobileMenu()" class="md:hidden fixed top-6 left-6 z-[110] bg-indigo-600 p-3 rounded-xl shadow-lg">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -49,16 +44,13 @@
     </button>
 
     <nav id="sidebar" class="fixed left-0 top-0 h-full z-[100] bg-[#1e293b]/95 border-r border-slate-800 flex flex-col shadow-2xl overflow-y-auto">
-        
         <div class="flex items-center justify-between p-4 mb-6">
             <div class="flex items-center gap-3">
                 <div class="bg-indigo-500 min-w-[32px] h-8 rounded-lg flex items-center justify-center text-white font-black">V</div>
-                <span class="menu-text font-bold text-sm tracking-tight">VIEL HUB</span>
+                <span class="menu-text font-bold text-sm tracking-tight text-white uppercase">Viel Hub</span>
             </div>
-            <button onclick="toggleMobileMenu()" class="md:hidden text-slate-400 hover:text-white">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
+            <button onclick="toggleMobileMenu()" class="md:hidden text-slate-400">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
         </div>
 
@@ -67,10 +59,10 @@
                 <p class="menu-text text-[9px] text-slate-500 font-black tracking-[0.2em] mb-2 px-3 uppercase">Coding</p>
                 <div class="space-y-1">
                     <a href="jasa/index.html" class="flex items-center h-10 px-3 rounded-xl hover:bg-indigo-500/20 text-slate-400 hover:text-indigo-400 transition">
-                        <span class="menu-text text-xs">WhatsApp Bot</span>
+                        <span class="menu-text text-xs">- WhatsApp Bot</span>
                     </a>
                     <a href="jasa/index.html" class="flex items-center h-10 px-3 rounded-xl hover:bg-indigo-500/20 text-slate-400 hover:text-indigo-400 transition">
-                        <span class="menu-text text-xs">Landing Page</span>
+                        <span class="menu-text text-xs">- Landing Page</span>
                     </a>
                 </div>
             </div>
@@ -78,7 +70,7 @@
             <div>
                 <p class="menu-text text-[9px] text-slate-500 font-black tracking-[0.2em] mb-2 px-3 uppercase">Services</p>
                 <a href="cleaning/index.html" class="flex items-center h-10 px-3 rounded-xl hover:bg-purple-500/20 text-slate-400 hover:text-purple-400 transition">
-                    <span class="menu-text text-xs">Kost Cleaning</span>
+                    <span class="menu-text text-xs">- Kost Cleaning</span>
                 </a>
             </div>
 
@@ -86,10 +78,10 @@
                 <p class="menu-text text-[9px] text-slate-500 font-black tracking-[0.2em] mb-2 px-3 uppercase">Affiliate</p>
                 <div class="space-y-1">
                     <a href="jasa/affiliate/index.html" class="flex items-center h-10 px-3 rounded-xl hover:bg-pink-500/20 text-slate-400 hover:text-pink-400 transition">
-                        <span class="menu-text text-xs">Digital Produk</span>
+                        <span class="menu-text text-xs">- Digital Produk</span>
                     </a>
                     <a href="jasa/affiliate/index.html" class="flex items-center h-10 px-3 rounded-xl hover:bg-pink-500/20 text-slate-400 hover:text-pink-400 transition">
-                        <span class="menu-text text-xs">Pakaian & Style</span>
+                        <span class="menu-text text-xs">- Pakaian & Style</span>
                     </a>
                 </div>
             </div>
@@ -101,47 +93,59 @@
         </div>
     </nav>
 
-    <main class="w-full md:pl-[60px] relative z-10 container mx-auto px-6 py-20 min-h-screen flex flex-col items-center justify-center">
-        <header class="text-center mb-16 animate__animated animate__fadeInDown">
-            <h1 class="text-6xl md:text-7xl font-extrabold tracking-tighter mb-6 bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+    <main class="w-full md:pl-[60px] relative z-10 container mx-auto px-6 py-20 min-h-screen flex flex-col justify-center">
+        
+        <header class="text-center mb-24 animate__animated animate__fadeIn">
+            <h1 class="text-6xl md:text-8xl font-extrabold tracking-tighter mb-8 bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
                 Viel Services
             </h1>
-            <p class="text-slate-400 text-lg md:text-xl max-w-xl mx-auto leading-relaxed">
-                Pilih layanan ala profesional yang kamu butuhkan hari ini.
+            <p class="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-medium">
+                Satu ekosistem untuk solusi digital cerdas, gaya hidup terkurasi, dan kenyamanan hunian profesional.
             </p>
         </header>
 
-        <div class="grid md:grid-cols-2 gap-8 w-full max-w-5xl">
-            <a href="jasa/index.html" class="group relative block p-[1px] rounded-[2.5rem] overflow-hidden transition-all duration-500 hover:scale-[1.02]">
-                <div class="absolute inset-0 bg-gradient-to-br from-indigo-500 to-transparent opacity-30 group-hover:opacity-100 transition-opacity"></div>
-                <div class="glass relative bg-[#1e293b]/90 rounded-[2.5rem] p-10 h-full text-center md:text-left">
-                    <span class="text-4xl float block mb-8">🚀</span>
-                    <h2 class="text-3xl font-bold mb-4 text-white">Digital & Affiliate</h2>
-                    <p class="text-slate-400 mb-8 leading-relaxed">Code, Web, dan Rekomendasi Produk.</p>
-                    <span class="text-indigo-400 font-bold uppercase text-xs tracking-widest">Kunjungi Situs →</span>
+        <section class="max-w-5xl mx-auto w-full animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6 text-center md:text-left">
+                    <h2 class="text-4xl font-black text-white tracking-tight">
+                        Satu Platform,<br><span class="text-indigo-500">Beragam Solusi.</span>
+                    </h2>
+                    <p class="text-slate-400 leading-relaxed text-sm md:text-base">
+                        Viel Services lahir untuk mempermudah hidup Anda. Kami percaya efisiensi tidak hanya soal baris kode koding, tapi juga soal kualitas lingkungan tinggal dan ketepatan pilihan produk harian.
+                    </p>
+                    <div class="pt-4">
+                        <button onclick="toggleMobileMenu()" class="md:hidden bg-indigo-600 text-white px-8 py-3 rounded-2xl font-bold shadow-lg shadow-indigo-500/20">Explore Menu</button>
+                    </div>
                 </div>
-            </a>
+                
+                <div class="grid gap-4">
+                    <div class="glass p-8 rounded-[2rem] border-l-4 border-indigo-500 hover:bg-white/5 transition duration-300">
+                        <h4 class="font-bold text-white mb-2 text-lg">Digital Innovation</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed">Membangun infrastruktur digital cerdas melalui bot automasi dan website berperforma tinggi.</p>
+                    </div>
+                    <div class="glass p-8 rounded-[2rem] border-l-4 border-purple-500 hover:bg-white/5 transition duration-300">
+                        <h4 class="font-bold text-white mb-2 text-lg">Essential Comfort</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed">Memberikan standar kenyamanan baru bagi hunian Anda melalui jasa pembersihan profesional.</p>
+                    </div>
+                    <div class="glass p-8 rounded-[2rem] border-l-4 border-pink-500 hover:bg-white/5 transition duration-300">
+                        <h4 class="font-bold text-white mb-2 text-lg">Curated Gear</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed">Menyaring produk gadget dan fashion terbaik untuk menunjang produktivitas gaya hidup Anda.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-            <a href="cleaning/index.html" class="group relative block p-[1px] rounded-[2.5rem] overflow-hidden transition-all duration-500 hover:scale-[1.02]">
-                <div class="absolute inset-0 bg-gradient-to-br from-purple-500 to-transparent opacity-30 group-hover:opacity-100 transition-opacity"></div>
-                <div class="glass relative bg-[#1e293b]/90 rounded-[2.5rem] p-10 h-full text-center md:text-left">
-                    <span class="text-4xl float block mb-8">🧹</span>
-                    <h2 class="text-3xl font-bold mb-4 text-white">Kost Cleaning</h2>
-                    <p class="text-slate-400 mb-8 leading-relaxed">Jasa kebersihan kamar kost profesional.</p>
-                    <span class="text-purple-400 font-bold uppercase text-xs tracking-widest">Cek Jadwal →</span>
-                </div>
-            </a>
-        </div>
+        <footer class="text-center mt-24 text-slate-600 text-xs tracking-[0.3em] uppercase">
+            © 2026 Viel Service | Elevating Your Standard
+        </footer>
     </main>
 
     <script>
-        // Toggle Sidebar Mobile
         function toggleMobileMenu() {
             const sidebar = document.getElementById('sidebar');
             sidebar.classList.toggle('mobile-open');
         }
 
-        // Lock Sidebar Desktop
         function toggleLock() {
             const sidebar = document.getElementById('sidebar');
             const status = document.getElementById('lock-status');
@@ -149,7 +153,6 @@
             status.innerText = sidebar.classList.contains('locked') ? "🔒" : "🔓";
         }
 
-        // Netlify Identity
         if (window.netlifyIdentity) {
             window.netlifyIdentity.on("init", user => {
                 if (!user) {
