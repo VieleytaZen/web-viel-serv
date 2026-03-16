@@ -3,76 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Viel Picks | Rekomendasi Produk Terbaik</title>
+    <title>Viel Picks | Rekomendasi Setup</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    
-    <script>
-        const script = document.createElement('script');
-        script.src = 'data.js?v=' + Date.now();
-        document.head.appendChild(script);
-    </script>
-
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .product-card:hover img { transform: scale(1.1); transition: 0.7s; }
-        .glass-nav { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #ffffff; }
+        .product-card:hover img { transform: scale(1.05); }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900">
-
-    <nav class="glass-nav sticky top-0 z-50 py-4 px-4">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <a href="../index.html" class="font-bold text-slate-500 hover:text-indigo-600 transition text-sm">← Back to Services</a>
-            <span class="font-black text-xl text-indigo-600 italic tracking-tighter">VIEL PICKS.</span>
-        </div>
+<body>
+    <nav class="py-6 px-8 flex justify-between items-center border-b border-slate-50 sticky top-0 bg-white/80 backdrop-blur-md z-50">
+        <a href="../index.html" class="text-sm font-bold text-slate-400 hover:text-indigo-600">← Kembali</a>
+        <span class="text-xl font-black italic tracking-tighter text-indigo-600">VIEL PICKS.</span>
+        <div class="w-10"></div>
     </nav>
 
-    <header class="py-16 px-6 text-center animate__animated animate__fadeIn">
-        <h1 class="text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">Rekomendasi Produk</h1>
-        <p class="text-slate-500 max-w-lg mx-auto leading-relaxed">Pilihan perlengkapan koding dan setup minimalis terbaik untuk mendukung produktivitasmu.</p>
+    <header class="pt-20 pb-10 px-6 text-center">
+        <h1 class="text-4xl font-extrabold text-slate-900 mb-3">Rekomendasi Setup</h1>
+        <p class="text-slate-400">Pilihan perlengkapan kerja dan gadget terbaik pilihan Viel.</p>
     </header>
 
-    <main class="max-w-6xl mx-auto px-6 pb-24">
+    <main class="max-w-7xl mx-auto px-6 pb-24">
         <div id="affiliate-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             </div>
     </main>
 
-    <footer class="py-12 border-t border-slate-200 text-center">
-        <p class="text-slate-400 font-bold text-[10px] uppercase tracking-widest">© 2026 Viel Service | by Viel</p>
-    </footer>
-
     <script>
-        function renderAffiliate() {
+        async function renderAffiliate() {
             const container = document.getElementById('affiliate-grid');
-            if(!container || typeof DB_AFFILIATE === 'undefined') {
-                setTimeout(renderAffiliate, 100);
-                return;
-            }
+            try {
+                // Fetch data dari folder affiliate
+                const response = await fetch('data.json?v=' + Date.now());
+                const data = await response.json();
 
-            let html = '';
-            DB_AFFILIATE.forEach((item, index) => {
-                html += `
-                    <div class="product-card bg-white rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-white animate__animated animate__fadeInUp" style="animation-delay: ${index * 0.1}s">
-                        <div class="h-52 overflow-hidden bg-slate-100 relative">
-                            <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover">
-                            <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-black text-indigo-600 uppercase tracking-widest">
-                                ${item.category}
+                let html = '';
+                data.forEach((item, index) => {
+                    html += `
+                        <div class="group animate__animated animate__fadeInUp" style="animation-delay: ${index * 0.1}s">
+                            <div class="aspect-square rounded-[2rem] overflow-hidden bg-slate-100 mb-6">
+                                <img src="${item.image}" class="w-full h-full object-cover transition-transform duration-700">
                             </div>
-                        </div>
-                        <div class="p-8">
-                            <h2 class="font-bold text-slate-800 mb-4 h-12 line-clamp-2 leading-tight">${item.title}</h2>
-                            <div class="flex items-center justify-between mt-8 pt-6 border-t border-slate-50">
-                                <span class="font-black text-slate-900">${item.price}</span>
-                                <a href="${item.link}" target="_blank" class="bg-slate-900 text-white px-5 py-2.5 rounded-2xl text-xs font-bold hover:bg-indigo-600 transition shadow-lg">Cek Produk</a>
+                            <div class="px-2">
+                                <span class="text-[10px] font-black uppercase tracking-widest text-indigo-500 mb-2 block">${item.category || 'Gear'}</span>
+                                <h3 class="font-bold text-slate-800 text-lg mb-2 leading-tight">${item.title}</h3>
+                                <div class="flex justify-between items-center mt-4">
+                                    <span class="font-black text-slate-900">${item.price}</span>
+                                    <a href="${item.link}" target="_blank" class="bg-slate-900 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-indigo-600 transition shadow-lg">Beli Sekarang</a>
+                                </div>
                             </div>
-                        </div>
-                    </div>`;
-            });
-            container.innerHTML = html;
+                        </div>`;
+                });
+                container.innerHTML = html;
+            } catch (e) { console.error(e); }
         }
-        document.addEventListener('DOMContentLoaded', renderAffiliate);
+        window.onload = renderAffiliate;
     </script>
 </body>
 </html>
