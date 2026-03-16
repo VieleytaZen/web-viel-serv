@@ -60,35 +60,40 @@ async function fetchAffiliate() {
     }
 }
 
-function renderProducts(products) {
-    const container = document.getElementById('affiliate-grid');
-    let html = '';
-    
-    if (products.length === 0) {
-        container.innerHTML = "<p class='text-center col-span-full text-slate-600 uppercase tracking-widest text-xs'>Belum ada produk.</p>";
-        return;
-    }
+async function renderJasa() {
+    const container = document.getElementById('jasa-grid');
+    try {
+        const response = await fetch('data.json?v=' + Date.now());
+        const data = await response.json();
+        
+        // Pastikan mengambil array 'digital'
+        window.currentData = data.digital || []; 
 
-    products.forEach((item, index) => {
-        html += `
-            <div class="group glass rounded-[2rem] overflow-hidden hover:scale-[1.02] transition-all duration-500 animate__animated animate__fadeInUp" style="animation-delay: ${index * 0.05}s">
-                <div class="aspect-square overflow-hidden bg-slate-800">
-                    <img src="${item.image}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                </div>
-                <div class="p-6">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-[9px] font-black uppercase tracking-[0.2em] text-indigo-400">${item.category}</span>
-                        <span class="text-[9px] font-bold text-slate-500 italic">${item.sub || ''}</span>
+        let html = '';
+        window.currentData.forEach((item, index) => {
+            // PENGAMAN: Jika id tidak ada, buat string kosong agar .includes tidak error
+            const itemId = item.id || "";
+            const icon = itemId.includes('web') ? '🌐' : '🤖';
+            
+            html += `
+                <div class="bg-white/70 backdrop-blur-md p-10 rounded-[3rem] border border-slate-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 animate__animated animate__fadeInUp" style="animation-delay: ${index * 0.1}s">
+                    <div class="flex justify-between items-start mb-8">
+                        <div class="text-5xl">${icon}</div>
+                        <span class="bg-indigo-50 text-indigo-600 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest">${item.price || 'Price TBA'}</span>
                     </div>
-                    <h3 class="font-bold text-white text-base mb-4 leading-tight">${item.title}</h3>
-                    <div class="flex justify-between items-center pt-4 border-t border-slate-800">
-                        <span class="font-black text-white text-sm">${item.price}</span>
-                        <a href="${item.link}" target="_blank" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-xl text-[10px] font-black transition shadow-lg shadow-indigo-500/20">BELI</a>
-                    </div>
-                </div>
-            </div>`;
-    });
-    container.innerHTML = html;
+                    <h3 class="text-2xl font-black text-slate-900 mb-4">${item.title || 'Untitled Service'}</h3>
+                    <p class="text-slate-500 mb-8 leading-relaxed text-sm">${item.desc || ''}</p>
+                    <button onclick="openModal('${itemId}')" class="font-bold text-indigo-600 hover:text-indigo-800 transition flex items-center gap-2 group text-sm">
+                        Cek Detail <span class="group-hover:translate-x-1 transition-transform">→</span>
+                    </button>
+                </div>`;
+        });
+        
+        container.innerHTML = html || "<p class='col-span-full text-center py-20 text-slate-400'>Belum ada layanan.</p>";
+    } catch (e) { 
+        console.error("Gagal memuat data coding:", e);
+        container.innerHTML = "<p class='col-span-full text-center py-20 text-red-400 font-bold'>Gagal memuat data. Periksa koneksi atau format JSON.</p>";
+    }
 }
 
 // Fungsi filter tetap sama seperti sebelumnya
