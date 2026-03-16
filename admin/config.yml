@@ -11,39 +11,5 @@ collections:
     folder: "jasa/affiliate"
     extension: "json"
     create: true
-    slug: "{{title}}"
     fields:
-      - {label: "Nama Produk", name: "title", widget: "string"}
-      - {label: "Harga", name: "price", widget: "string"}
-      - {label: "Link Affiliate", name: "link", widget: "string"}
-      - {label: "Foto Produk", name: "image", widget: "image"}
-
-  - name: "jasa_coding"
-    label: "Layanan Jasa Coding"
-    file: "jasa/data.json"
-    fields:
-      - name: "digital"
-        label: "Daftar Jasa"
-        widget: "list"
-        fields:
-          - {label: "ID", name: "id", widget: "string"}
-          - {label: "Judul", name: "title", widget: "string"}
-          - {label: "Deskripsi", name: "desc", widget: "text"}
-          - {label: "Detail HTML", name: "detail", widget: "text"}
-          - {label: "Harga", name: "price", widget: "string"}
-          - {label: "Link WA", name: "waLink", widget: "string"}
-
-  - name: "jasa_cleaning"
-    label: "Layanan Jasa Cleaning"
-    file: "cleaning/data.json"
-    fields:
-      - name: "cleaning"
-        label: "Daftar Paket Cleaning"
-        widget: "list"
-        fields:
-          - {label: "ID", name: "id", widget: "string"}
-          - {label: "Nama Paket", name: "title", widget: "string"}
-          - {label: "Deskripsi", name: "desc", widget: "text"}
-          - {label: "Detail", name: "detail", widget: "text"}
-          - {label: "Harga", name: "price", widget: "string"}
-          - {label: "Link WA", name: "waLink", widget: "string"}
+      - {label: "Title", name: "title", widget: "string"}
