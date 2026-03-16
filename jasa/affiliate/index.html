@@ -34,27 +34,29 @@
 
 async function fetchAffiliate() {
     const container = document.getElementById('affiliate-grid');
-    // Ganti username dan repo sesuai akunmu
     const username = "VieleytaZen";
     const repo = "web-viel-serv";
-    const folderPath = "jasa/affiliate/items";
+    // Sesuaikan path ini dengan folder di GitHub kamu
+    const folderPath = "jasa/affiliate/items"; 
 
     try {
-        // 1. Ambil daftar file dari GitHub API
-        const response = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${folderPath}`);
+        // Gunakan parameter ?ref=main untuk memastikan mengambil dari branch utama
+        const response = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${folderPath}?ref=main`);
+        
+        if (!response.ok) throw new Error("Folder tidak ditemukan di GitHub");
+        
         const files = await response.json();
-
-        // 2. Filter hanya file yang berakhiran .json
         const jsonFiles = files.filter(file => file.name.endsWith('.json'));
 
-        // 3. Ambil isi konten dari setiap file tersebut
         const promises = jsonFiles.map(file => fetch(file.download_url).then(res => res.json()));
-        allProducts = await Promise.all(promises);
+        const allProducts = await Promise.all(promises);
 
         renderProducts(allProducts);
     } catch (e) {
-        console.error("Error fetching items:", e);
-        container.innerHTML = "<p class='text-center col-span-full text-slate-600 uppercase tracking-widest text-xs'>Gagal memuat produk atau folder masih kosong.</p>";
+        console.error("Detail Error:", e);
+        container.innerHTML = `<p class='text-center col-span-full text-slate-600 uppercase tracking-widest text-[10px]'>
+            Gagal memuat produk. <br> <span class="text-[8px] opacity-50">Error: ${e.message}</span>
+        </p>`;
     }
 }
 
