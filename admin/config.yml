@@ -12,6 +12,7 @@ collections:
     extension: "json"
     create: true
     slug: "{{title}}"
+    summary: "{{title}} - {{price}}"
     fields:
       - {label: "Nama Produk", name: "title", widget: "string"}
       - {label: "Harga", name: "price", widget: "string"}
@@ -19,32 +20,32 @@ collections:
       - {label: "Link Shopee", name: "link", widget: "string"}
       - {label: "Foto Produk", name: "image", widget: "image"}
 
-  - name: "coding"
-    label: "💻 Jasa Coding"
+  - name: "jasa_coding"
+    label: "💻 Layanan Jasa Coding"
     file: "jasa/data.json"
     fields:
       - name: "digital"
-        label: "Daftar Layanan"
+        label: "Daftar Jasa"
         widget: "list"
         fields:
-          - {label: "ID", name: "id", widget: "hidden", default: "web-dev"}
+          - {label: "ID", name: "id", widget: "string"}
           - {label: "Judul", name: "title", widget: "string"}
           - {label: "Deskripsi", name: "desc", widget: "text"}
-          - {label: "Detail (HTML)", name: "detail", widget: "text"}
+          - {label: "Detail (HTML)", name: "detail", widget: "code", default_language: "html"}
           - {label: "Harga", name: "price", widget: "string"}
           - {label: "Link WA", name: "waLink", widget: "string"}
 
-  - name: "cleaning"
-    label: "🧹 Jasa Cleaning"
+  - name: "jasa_cleaning"
+    label: "🧹 Layanan Jasa Cleaning"
     file: "cleaning/data.json"
     fields:
       - name: "cleaning"
-        label: "Paket Cleaning"
+        label: "Daftar Paket Cleaning"
         widget: "list"
         fields:
-          - {label: "ID", name: "id", widget: "hidden", default: "hemat"}
+          - {label: "ID", name: "id", widget: "string"}
           - {label: "Nama Paket", name: "title", widget: "string"}
           - {label: "Deskripsi", name: "desc", widget: "text"}
-          - {label: "Detail", name: "detail", widget: "text"}
+          - {label: "Detail", name: "detail", widget: "code", default_language: "html"}
           - {label: "Harga", name: "price", widget: "string"}
           - {label: "Link WA", name: "waLink", widget: "string"}
