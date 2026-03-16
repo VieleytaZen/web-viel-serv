@@ -19,22 +19,28 @@ collections:
 
   - name: "jasa_coding"
     label: "Jasa Coding"
-    file: "jasa/data.json"
-    fields:
-      - name: "digital"
-        label: "List Jasa"
-        widget: "list"
+    files:
+      - label: "Data Jasa Coding"
+        name: "jasa_coding"
+        file: "jasa/data.json"
         fields:
-          - {label: "Title", name: "title", widget: "string"}
-          - {label: "Price", name: "price", widget: "string"}
+          - name: "digital"
+            label: "List Jasa"
+            widget: "list"
+            fields:
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Price", name: "price", widget: "string"}
 
   - name: "jasa_cleaning"
     label: "Jasa Cleaning"
-    file: "cleaning/data.json"
-    fields:
-      - name: "cleaning"
-        label: "List Cleaning"
-        widget: "list"
+    files:
+      - label: "Data Cleaning"
+        name: "jasa_cleaning"
+        file: "cleaning/data.json"
         fields:
-          - {label: "Title", name: "title", widget: "string"}
-          - {label: "Price", name: "price", widget: "string"}
+          - name: "cleaning"
+            label: "List Cleaning"
+            widget: "list"
+            fields:
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Price", name: "price", widget: "string"}
