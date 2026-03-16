@@ -11,16 +11,14 @@ public_folder: "/assets/img"
 collections:
   - name: "affiliate"
     label: "🛒 Produk Affiliate"
-    # Mengarahkan ke sub-folder agar file index.html tidak tercampur dengan data produk
     folder: "jasa/affiliate/items"
     extension: "json"
     create: true
-    # Menghasilkan nama file otomatis berdasarkan judul produk
     slug: "{{title}}"
     fields:
       - {label: "Nama Produk", name: "title", widget: "string"}
       - {label: "Harga", name: "price", widget: "string"}
-      - {label: "Kategori", name: "category", widget: "select", options: ["Digital", "Pakaian"]}
+      - {label: "Kategori", name: "category", widget: "select", options: ["Digital", "Pakaian", "Aksesoris"]}
       - {label: "Sub-Kategori", name: "sub", widget: "select", options: ["Hp", "Laptop", "Aksesoris", "Baju", "Hoodie"]}
       - {label: "Link Shopee", name: "link", widget: "string"}
       - {label: "Foto Produk", name: "image", widget: "image"}
