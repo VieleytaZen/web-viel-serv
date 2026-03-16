@@ -12,44 +12,39 @@ collections:
     extension: "json"
     create: true
     slug: "{{title}}"
-    # Menampilkan info harga & kategori di daftar admin
-    summary: "{{title}} - {{price}} ({{category}})" 
-    sortable_fields: ["title", "price"]
     fields:
-      - {label: "Nama Produk", name: "title", widget: "string", hint: "Contoh: Keyboard Mechanical RGB"}
-      - {label: "Harga", name: "price", widget: "string", hint: "Contoh: Rp 450.000"}
-      - {label: "Kategori", name: "category", widget: "select", options: ["Setup", "Aksesoris", "Gadget", "Software"]}
-      - {label: "Link Shopee/Affiliate", name: "link", widget: "string"}
+      - {label: "Nama Produk", name: "title", widget: "string"}
+      - {label: "Harga", name: "price", widget: "string"}
+      - {label: "Kategori", name: "category", widget: "select", options: ["Setup", "Aksesoris", "Gadget"]}
+      - {label: "Link Shopee", name: "link", widget: "string"}
       - {label: "Foto Produk", name: "image", widget: "image"}
 
-  - name: "jasa_coding"
-    label: "💻 Layanan Jasa Coding"
+  - name: "coding"
+    label: "💻 Jasa Coding"
     file: "jasa/data.json"
-    allow_add: true # Fitur untuk menambah jasa baru langsung dari admin
     fields:
       - name: "digital"
-        label: "Daftar Jasa"
+        label: "Daftar Layanan"
         widget: "list"
-        add_to_top: false
         fields:
-          - {label: "ID (web-dev/bot-dev)", name: "id", widget: "string"}
-          - {label: "Judul Jasa", name: "title", widget: "string"}
-          - {label: "Deskripsi Singkat", name: "desc", widget: "text"}
-          - {label: "Detail Layanan (HTML)", name: "detail", widget: "markdown"}
-          - {label: "Harga Mulai", name: "price", widget: "string"}
-          - {label: "Link WhatsApp", name: "waLink", widget: "string"}
+          - {label: "ID", name: "id", widget: "hidden", default: "web-dev"}
+          - {label: "Judul", name: "title", widget: "string"}
+          - {label: "Deskripsi", name: "desc", widget: "text"}
+          - {label: "Detail (HTML)", name: "detail", widget: "text"}
+          - {label: "Harga", name: "price", widget: "string"}
+          - {label: "Link WA", name: "waLink", widget: "string"}
 
-  - name: "jasa_cleaning"
-    label: "🧹 Layanan Jasa Cleaning"
+  - name: "cleaning"
+    label: "🧹 Jasa Cleaning"
     file: "cleaning/data.json"
     fields:
       - name: "cleaning"
-        label: "Daftar Paket Cleaning"
+        label: "Paket Cleaning"
         widget: "list"
         fields:
-          - {label: "ID", name: "id", widget: "string"}
+          - {label: "ID", name: "id", widget: "hidden", default: "hemat"}
           - {label: "Nama Paket", name: "title", widget: "string"}
           - {label: "Deskripsi", name: "desc", widget: "text"}
-          - {label: "Detail (HTML)", name: "detail", widget: "markdown"}
+          - {label: "Detail", name: "detail", widget: "text"}
           - {label: "Harga", name: "price", widget: "string"}
           - {label: "Link WA", name: "waLink", widget: "string"}
