@@ -1,0 +1,20 @@
+{
+  "digital": [
+    {
+      "id": "web-dev",
+      "title": "Jasa Pembuatan Web 🌐",
+      "desc": "Landing page modern dan responsif.",
+      "detail": "Desain UI/UX, Hosting, Domain.",
+      "price": "Mulai Rp 500k",
+      "waLink": "https://wa.me/6282133692292"
+    },
+    {
+      "id": "bot-dev",
+      "title": "Jasa Pembuatan Bot 🤖",
+      "desc": "Automasi Telegram/WhatsApp.",
+      "detail": "Auto-reply, Database, Maintenance.",
+      "price": "Mulai Rp 300k",
+      "waLink": "https://wa.me/6282133692292"
+    }
+  ]
+}

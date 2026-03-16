@@ -61,40 +61,37 @@
     </div>
 
     <script>
-        function renderJasa() {
-            const container = document.getElementById('jasa-grid');
-            if(!container || typeof DB_SERVICES === 'undefined') {
-                // Jika data belum load, coba lagi dalam 100ms
-                setTimeout(renderJasa, 100);
-                return;
-            }
+        async function renderJasa() {
+    const container = document.getElementById('jasa-grid');
+    try {
+        const response = await fetch('data.json?v=' + Date.now());
+        const data = await response.json();
+        window.currentData = data.digital; // Simpan untuk modal
 
-            let html = '';
-            DB_SERVICES.digital.forEach((item, index) => {
-                const icon = item.id === 'web-dev' ? '🌐' : '🤖';
-                html += `
-                    <div class="card-modern bg-white p-10 rounded-[3rem] border border-slate-100 shadow-sm animate__animated animate__fadeInUp">
-                        <div class="flex justify-between items-start mb-8 text-3xl">${icon} <span class="text-sm font-bold text-indigo-600 bg-indigo-50 px-4 py-1 rounded-full">${item.price}</span></div>
-                        <h3 class="text-2xl font-black mb-4">${item.title}</h3>
-                        <p class="text-slate-500 mb-8 leading-relaxed">${item.desc}</p>
-                        <button onclick="openModal('${item.id}')" class="text-indigo-600 font-black tracking-widest text-xs">CEK DETAIL →</button>
-                    </div>`;
-            });
-            container.innerHTML = html;
-        }
+        let html = '';
+        data.digital.forEach((item) => {
+            const icon = item.id === 'web-dev' ? '🌐' : '🤖';
+            html += `
+                <div class="card-modern bg-white p-10 rounded-[3rem] border border-slate-100">
+                    <div class="text-3xl mb-4">${icon}</div>
+                    <h3 class="text-2xl font-black mb-4">${item.title}</h3>
+                    <p class="text-slate-500 mb-8">${item.desc}</p>
+                    <button onclick="openModalJSON('${item.id}')" class="text-indigo-600 font-bold">CEK DETAIL →</button>
+                </div>`;
+        });
+        container.innerHTML = html;
+    } catch (e) { console.error(e); }
+}
 
-        function openModal(id) {
-            const item = DB_SERVICES.digital.find(d => d.id === id);
-            if(item) {
-                document.getElementById('modal-content').innerHTML = `
-                    <h2 class="text-3xl font-black text-slate-900 mb-6">${item.title}</h2>
-                    <div class="text-left bg-slate-50 p-8 rounded-[2rem] text-slate-600">${item.detail}</div>`;
-                document.getElementById('modal-cta').href = item.waLink;
-                document.getElementById('modal-container').classList.remove('hidden');
-            }
-        }
-        function closeModal() { document.getElementById('modal-container').classList.add('hidden'); }
-        window.onload = renderJasa;
+function openModalJSON(id) {
+    const item = window.currentData.find(d => d.id === id);
+    if(item) {
+        document.getElementById('modal-content').innerHTML = `<h2 class="text-2xl font-bold">${item.title}</h2><p class="mt-4">${item.detail}</p>`;
+        document.getElementById('modal-cta').href = item.waLink;
+        document.getElementById('modal-container').classList.remove('hidden');
+    }
+}
+window.onload = renderJasa;
     </script>
 </body>
 </html>

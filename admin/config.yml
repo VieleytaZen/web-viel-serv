@@ -32,3 +32,18 @@ collections:
           - {label: "Detail HTML", name: "detail", widget: "text"}
           - {label: "Harga", name: "price", widget: "string"}
           - {label: "Link WA", name: "waLink", widget: "string"}
+  
+  - name: "jasa_cleaning"
+    label: "Layanan Jasa Cleaning"
+    file: "cleaning/data.json"
+    fields:
+      - name: "cleaning"
+        label: "Daftar Paket Cleaning"
+        widget: "list"
+        fields:
+          - {label: "ID (hemat/deep/pindah)", name: "id", widget: "string"}
+          - {label: "Nama Paket", name: "title", widget: "string"}
+          - {label: "Deskripsi", name: "desc", widget: "text"}
+          - {label: "Detail (HTML)", name: "detail", widget: "text"}
+          - {label: "Harga", name: "price", widget: "string"}
+          - {label: "Link WA", name: "waLink", widget: "string"}
