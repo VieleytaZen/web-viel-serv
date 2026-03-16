@@ -11,11 +11,13 @@ collections:
     folder: "jasa/affiliate"
     extension: "json"
     create: true
+    slug: "{{title}}"
     fields:
       - {label: "Nama Produk", name: "title", widget: "string"}
       - {label: "Harga", name: "price", widget: "string"}
-      - {label: "Link", name: "link", widget: "string"}
-      - {label: "Foto", name: "image", widget: "image"}
+      - {label: "Kategori", name: "category", widget: "select", options: ["Setup", "Gadget", "Aksesoris"]}
+      - {label: "Link Shopee", name: "link", widget: "string"}
+      - {label: "Foto Produk", name: "image", widget: "image"}
 
   - name: "jasa_coding"
     label: "Jasa Coding"
@@ -28,7 +30,7 @@ collections:
             label: "List Jasa"
             widget: "list"
             fields:
-              - {label: "ID (Contoh: web-dev)", name: "id", widget: "string"}
+              - {label: "ID (PENTING: Tanpa Spasi, misal: web-dev)", name: "id", widget: "string"}
               - {label: "Title", name: "title", widget: "string"}
               - {label: "Deskripsi Singkat", name: "desc", widget: "string"}
               - {label: "Detail Layanan (HTML)", name: "detail", widget: "text"}
@@ -46,8 +48,8 @@ collections:
             label: "List Cleaning"
             widget: "list"
             fields:
-              - {label: "ID (Contoh: hemat)", name: "id", widget: "string"}
-              - {label: "Title", name: "title", widget: "string"}
+              - {label: "ID (PENTING: misal: paket-hemat)", name: "id", widget: "string"}
+              - {label: "Nama Paket", name: "title", widget: "string"}
               - {label: "Deskripsi Singkat", name: "desc", widget: "string"}
               - {label: "Detail (HTML)", name: "detail", widget: "text"}
               - {label: "Price", name: "price", widget: "string"}
