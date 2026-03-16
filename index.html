@@ -5,32 +5,89 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Viel Home | Solusi Digital & Jasa Bersih Kost</title>
     
-    <script>
-  if (window.netlifyIdentity) {
-    window.netlifyIdentity.on("init", user => {
-      if (!user) {
-        window.netlifyIdentity.on("login", () => {
-          document.location.href = "/admin/";
-        });
-      }
-    });
-  }
-</script>
-    <meta name="description" content="Portal layanan terpadu Viel: Jasa desain grafis, pembuatan website, rekomendasi gadget, dan jasa pembersihan kost profesional.">
-    <meta name="keywords" content="Viel Ecosystem, Jasa Digital, Jasa Bersih Kost, Produk Rekomendasi">
-    
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        
+        /* Sidebar Styling */
+        #sidebar { 
+            width: 80px; 
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-x: hidden;
+        }
+        
+        /* Efek Hover: Melebar sementara */
+        #sidebar:hover:not(.locked) { width: 280px; }
+        
+        /* Efek Locked: Tetap lebar */
+        #sidebar.locked { width: 280px; border-right: 1px solid rgba(99, 102, 241, 0.3); }
+
+        /* Sembunyikan text saat menciut */
+        .menu-text { opacity: 0; transition: opacity 0.3s; white-space: nowrap; }
+        #sidebar:hover .menu-text, #sidebar.locked .menu-text { opacity: 1; }
+
         @keyframes floating { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-15px); } }
         .float { animation: floating 4s ease-in-out infinite; }
     </style>
 </head>
-<body class="bg-[#0f172a] text-slate-200 min-h-screen overflow-x-hidden">
-    <main class="relative z-10 container mx-auto px-6 py-20 min-h-screen flex flex-col items-center justify-center">
+<body class="bg-[#0f172a] text-slate-200 min-h-screen flex">
+
+    <nav id="sidebar" onclick="toggleLock()" class="fixed left-0 top-0 h-full z-[100] bg-[#1e293b]/95 border-r border-slate-800 flex flex-col p-4 shadow-2xl cursor-pointer">
+        <div class="mb-10 flex items-center gap-4 px-2">
+            <div class="bg-indigo-500 p-2 rounded-xl text-white font-black text-xl">V.</div>
+            <span class="menu-text font-black tracking-tighter text-xl">VIEL HUB</span>
+        </div>
+
+        <div class="flex-1 space-y-8 overflow-y-auto custom-scrollbar">
+            <div class="group">
+                <p class="menu-text text-[10px] text-slate-500 font-black tracking-[0.2em] mb-4 uppercase">Coding</p>
+                <div class="space-y-2">
+                    <a href="jasa/index.html" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-indigo-500/20 text-slate-400 hover:text-indigo-400 transition">
+                        <span class="text-xl">🤖</span>
+                        <span class="menu-text text-xs">WhatsApp Bot</span>
+                    </a>
+                    <a href="jasa/index.html" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-indigo-500/20 text-slate-400 hover:text-indigo-400 transition">
+                        <span class="text-xl">🌐</span>
+                        <span class="menu-text text-xs">Landing Page</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="group">
+                <p class="menu-text text-[10px] text-slate-500 font-black tracking-[0.2em] mb-4 uppercase">Services</p>
+                <a href="cleaning/index.html" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-purple-500/20 text-slate-400 hover:text-purple-400 transition">
+                    <span class="text-xl">🧹</span>
+                    <span class="menu-text text-xs">Kost Cleaning</span>
+                </a>
+            </div>
+
+            <div class="group">
+                <p class="menu-text text-[10px] text-slate-500 font-black tracking-[0.2em] mb-4 uppercase">Affiliate</p>
+                <div class="space-y-2">
+                    <a href="jasa/affiliate/index.html" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-pink-500/20 text-slate-400 hover:text-pink-400 transition">
+                        <span class="text-xl">📱</span>
+                        <span class="menu-text text-xs">Gadget Digital</span>
+                    </a>
+                    <a href="jasa/affiliate/index.html" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-pink-500/20 text-slate-400 hover:text-pink-400 transition">
+                        <span class="text-xl">👕</span>
+                        <span class="menu-text text-xs">Pakaian & Style</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-auto border-t border-slate-800 pt-4 flex items-center gap-4 px-2">
+            <div id="lock-icon" class="text-slate-500">🔓</div>
+            <span class="menu-text text-[10px] font-bold text-slate-500 italic">Click to lock menu</span>
+        </div>
+    </nav>
+
+    <main class="ml-[80px] w-full relative z-10 container mx-auto px-6 py-20 min-h-screen flex flex-col items-center justify-center">
         <header class="text-center mb-16 animate__animated animate__fadeInDown">
             <h1 class="text-6xl md:text-7xl font-extrabold tracking-tighter mb-6 bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
                 Viel Services
@@ -63,20 +120,31 @@
         </div>
     </main>
 
-    <footer class="text-center py-10 text-slate-500 text-sm">
-        © 2026 Viel Service | by Viel
-    </footer>
-
     <script>
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("init", user => {
-          if (!user) {
-            window.netlifyIdentity.on("login", () => {
-              document.location.href = "/admin/";
+        // Fungsi Lock Sidebar
+        function toggleLock() {
+            const sidebar = document.getElementById('sidebar');
+            const lockIcon = document.getElementById('lock-icon');
+            
+            sidebar.classList.toggle('locked');
+            
+            if(sidebar.classList.contains('locked')) {
+                lockIcon.innerText = "🔒";
+            } else {
+                lockIcon.innerText = "🔓";
+            }
+        }
+
+        // Netlify Identity
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on("init", user => {
+                if (!user) {
+                    window.netlifyIdentity.on("login", () => {
+                        document.location.href = "/admin/";
+                    });
+                }
             });
-          }
-        });
-      }
+        }
     </script>
 </body>
 </html>
