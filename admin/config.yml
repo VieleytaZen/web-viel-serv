@@ -11,10 +11,11 @@ public_folder: "/assets/img"
 collections:
   - name: "affiliate"
     label: "🛒 Produk Affiliate"
-    # Menggunakan folder karena kamu ingin menambah banyak file produk
-    folder: "jasa/affiliate"
+    # Mengarahkan ke sub-folder agar file index.html tidak tercampur dengan data produk
+    folder: "jasa/affiliate/items"
     extension: "json"
     create: true
+    # Menghasilkan nama file otomatis berdasarkan judul produk
     slug: "{{title}}"
     fields:
       - {label: "Nama Produk", name: "title", widget: "string"}
@@ -26,7 +27,6 @@ collections:
 
   - name: "jasa_coding"
     label: "💻 Jasa Coding"
-    # Menggunakan files karena merujuk ke satu file data.json saja
     files:
       - label: "Data Jasa Coding"
         name: "jasa_coding"
