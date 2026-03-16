@@ -44,43 +44,52 @@
 
     <script>
         async function renderJasa() {
-            const container = document.getElementById('jasa-grid');
-            try {
-                const response = await fetch('data.json?v=' + Date.now());
-                const data = await response.json();
-                window.currentData = data.digital;
+    const container = document.getElementById('jasa-grid');
+    try {
+        // Tambahkan timestamp agar browser tidak mengambil cache lama
+        const response = await fetch('data.json?v=' + Date.now());
+        const data = await response.json();
+        
+        // Decap CMS menyimpan list di dalam key 'digital' sesuai config.yml
+        window.currentData = data.digital || []; 
 
-                let html = '';
-                data.digital.forEach((item, index) => {
-                    const icon = item.id === 'web-dev' ? '🌐' : '🤖';
-                    html += `
-                        <div class="glass-card p-10 rounded-[3rem] hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 animate__animated animate__fadeInUp" style="animation-delay: ${index * 0.1}s">
-                            <div class="flex justify-between items-start mb-8">
-                                <div class="text-5xl">${icon}</div>
-                                <span class="bg-indigo-50 text-indigo-600 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest">${item.price}</span>
-                            </div>
-                            <h3 class="text-2xl font-black text-slate-900 mb-4">${item.title}</h3>
-                            <p class="text-slate-500 mb-8 leading-relaxed">${item.desc}</p>
-                            <button onclick="openModal('${item.id}')" class="font-bold text-indigo-600 group">
-                                Cek Detail <span class="inline-block group-hover:translate-x-1 transition-transform">→</span>
-                            </button>
-                        </div>`;
-                });
-                container.innerHTML = html;
-            } catch (e) { console.error(e); }
-        }
+        let html = '';
+        window.currentData.forEach((item, index) => {
+            // Logika icon: jika ID mengandung 'web' kasih bola dunia, selain itu robot
+            const icon = item.id.includes('web') ? '🌐' : '🤖';
+            
+            html += `
+                <div class="glass-card p-10 rounded-[3rem] hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 animate__animated animate__fadeInUp" style="animation-delay: ${index * 0.1}s">
+                    <div class="flex justify-between items-start mb-8">
+                        <div class="text-5xl">${icon}</div>
+                        <span class="bg-indigo-50 text-indigo-600 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest">${item.price}</span>
+                    </div>
+                    <h3 class="text-2xl font-black text-slate-900 mb-4">${item.title}</h3>
+                    <p class="text-slate-500 mb-8 leading-relaxed">${item.desc || item.descSingkat || ''}</p>
+                    <button onclick="openModal('${item.id}')" class="font-bold text-indigo-600 group">
+                        Cek Detail <span class="inline-block group-hover:translate-x-1 transition-transform">→</span>
+                    </button>
+                </div>`;
+        });
+        
+        container.innerHTML = html || "<p class='col-span-full text-center text-slate-400'>Belum ada layanan coding tersedia.</p>";
+    } catch (e) { 
+        console.error("Gagal memuat data coding:", e);
+        container.innerHTML = "<p class='col-span-full text-center text-red-400'>Gagal memuat data.</p>";
+    }
+}
 
-        function openModal(id) {
-            const item = window.currentData.find(d => d.id === id);
-            if(item) {
-                document.getElementById('modal-content').innerHTML = `
-                    <h2 class="text-3xl font-black text-slate-900 mb-6">${item.title}</h2>
-                    <div class="bg-slate-50 p-6 rounded-2xl text-slate-600 leading-relaxed">${item.detail}</div>
-                `;
-                document.getElementById('modal-cta').href = item.waLink;
-                document.getElementById('modal-container').classList.remove('hidden');
-            }
-        }
+function openModal(id) {
+    const item = window.currentData.find(d => d.id === id);
+    if(item) {
+        document.getElementById('modal-content').innerHTML = `
+            <h2 class="text-3xl font-black text-slate-900 mb-6">${item.title}</h2>
+            <div class="bg-slate-50 p-6 rounded-2xl text-slate-600 leading-relaxed whitespace-pre-line">${item.detail}</div>
+        `;
+        document.getElementById('modal-cta').href = item.waLink;
+        document.getElementById('modal-container').classList.remove('hidden');
+    }
+}
         function closeModal() { document.getElementById('modal-container').classList.add('hidden'); }
         window.onload = renderJasa;
     </script>
