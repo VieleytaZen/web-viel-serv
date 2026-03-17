@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Viel Picks | Rekomendasi Setup</title>
+    <title>Viel Picks | Rekomendasi Setup & Lifestyle</title>
+    
+    <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
@@ -18,17 +21,20 @@
             border-radius: 1rem; font-size: 0.75rem; font-weight: bold; z-index: 1000; display: none;
         }
 
-        /* Line Clamp untuk membatasi baris deskripsi di kartu */
         .line-clamp-2 {
             display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
         }
+
+        /* Custom Scrollbar untuk Modal */
+        .custom-scroll::-webkit-scrollbar { width: 4px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
     </style>
 </head>
 <body>
     <div id="share-toast" class="animate__animated">Link Tersalin ke Clipboard! 📋</div>
 
-    <div id="product-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-6">
-        <div class="bg-white rounded-[2.5rem] max-w-2xl w-full max-h-[90vh] overflow-y-auto p-8 md:p-12 relative shadow-2xl animate__animated animate__zoomIn">
+    <div id="product-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-[2.5rem] max-w-3xl w-full max-h-[90vh] overflow-y-auto custom-scroll p-8 md:p-12 relative shadow-2xl animate__animated animate__zoomIn">
             <button onclick="closeModal()" class="absolute top-6 right-6 text-slate-300 hover:text-slate-900 text-3xl transition">&times;</button>
             <div id="modal-body"></div>
         </div>
@@ -41,14 +47,14 @@
     </nav>
 
     <header class="pt-20 pb-10 px-6 text-center animate__animated animate__fadeIn">
-        <h1 class="text-4xl font-extrabold text-slate-900 mb-3 tracking-tight">Rekomendasi Setup</h1>
-        <p class="text-slate-400 text-sm">Pilihan perlengkapan kerja dan gadget terbaik pilihan Viel.</p>
+        <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4 tracking-tight">Rekomendasi Setup</h1>
+        <p class="text-slate-400 text-sm max-w-lg mx-auto leading-relaxed">Pilihan perlengkapan kerja, gadget, dan style terbaik yang dikurasi langsung oleh Viel.</p>
     </header>
 
     <div class="max-w-md mx-auto mb-12 px-6 animate__animated animate__fadeInUp" style="animation-delay: 0.1s">
         <div class="relative group">
             <input type="text" id="product-search" onkeyup="searchProducts()" 
-                   placeholder="Cari produk... (misal: celana, hoodie, bot)" 
+                   placeholder="Cari produk atau merk..." 
                    class="w-full bg-slate-50 border border-slate-200 rounded-[2rem] py-4 px-8 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all duration-300">
             <div class="absolute right-6 top-4 text-slate-300 group-focus-within:text-indigo-500 transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -60,7 +66,7 @@
 
     <main class="max-w-7xl mx-auto px-6 pb-24">
         <div id="affiliate-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            <p class="col-span-full text-center text-slate-300 text-xs animate-pulse uppercase tracking-widest">Menghubungkan ke database...</p>
+            <p class="col-span-full text-center text-slate-300 text-xs animate-pulse uppercase tracking-widest py-20">Menghubungkan ke database...</p>
         </div>
     </main>
 
@@ -79,7 +85,7 @@
 
             try {
                 const res = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${folderPath}?ref=main&cb=${Date.now()}`);
-                if (!res.ok) throw new Error("Database tidak ditemukan.");
+                if (!res.ok) throw new Error("Database offline.");
                 
                 const files = await res.json();
                 const jsonFiles = files.filter(f => f.name.endsWith('.json'));
@@ -87,6 +93,7 @@
                 const promises = jsonFiles.map(f => fetch(f.download_url).then(r => r.json()));
                 allProducts = await Promise.all(promises);
 
+                // Filter berdasarkan Kategori URL (Sidebar)
                 if (filterCat) {
                     filteredByUrl = allProducts.filter(p => (p.category || "").toLowerCase() === filterCat.toLowerCase());
                     const titleElement = document.querySelector('h1');
@@ -98,7 +105,7 @@
                 renderProducts(filteredByUrl);
             } catch (e) {
                 console.error(e);
-                container.innerHTML = `<p class="col-span-full text-center text-slate-400 text-[10px] py-20 uppercase tracking-widest">Gagal memuat data.</p>`;
+                container.innerHTML = `<p class="col-span-full text-center text-slate-400 text-[10px] py-20 uppercase tracking-widest font-bold">Gagal memuat data produk.</p>`;
             }
         }
 
@@ -108,13 +115,14 @@
                 const title = (item.title || "").toLowerCase();
                 const category = (item.category || "").toLowerCase();
                 const sub = (item.sub || "").toLowerCase();
-                return title.includes(query) || category.includes(query) || sub.includes(query);
+                const brand = (item.brand || "").toLowerCase();
+                return title.includes(query) || category.includes(query) || sub.includes(query) || brand.includes(query);
             });
             renderProducts(results);
         }
 
         function shareProduct(e, link) {
-            e.stopPropagation(); // Mencegah modal terbuka saat klik tombol share
+            e.stopPropagation();
             navigator.clipboard.writeText(link).then(() => {
                 const toast = document.getElementById('share-toast');
                 toast.style.display = 'block';
@@ -137,19 +145,25 @@
             const body = document.getElementById('modal-body');
             
             body.innerHTML = `
-                <div class="grid md:grid-cols-2 gap-8 items-start">
-                    <img src="${item.image}" class="w-full rounded-3xl shadow-lg border border-slate-100">
+                <div class="grid md:grid-cols-2 gap-10 items-start">
+                    <div class="aspect-square rounded-[2rem] overflow-hidden shadow-xl border border-slate-50">
+                        <img src="${item.image}" class="w-full h-full object-cover">
+                    </div>
                     <div>
-                        <div class="flex items-center gap-2 mb-4">
+                        <div class="flex flex-wrap items-center gap-2 mb-4">
                             <span class="px-3 py-1 bg-indigo-50 text-indigo-600 rounded-full text-[10px] font-black uppercase tracking-widest">${item.category || 'GEAR'}</span>
+                            ${item.brand ? `<span class="px-3 py-1 bg-slate-100 text-slate-500 rounded-full text-[10px] font-black uppercase tracking-widest">${item.brand}</span>` : ''}
                             ${item.rate ? `<span class="text-sm font-bold text-slate-700">⭐ ${item.rate}</span>` : ''}
                         </div>
                         <h2 class="text-3xl font-extrabold text-slate-900 mb-2 leading-tight">${item.title}</h2>
-                        <p class="text-xl font-black text-indigo-600 mb-6">${item.price}</p>
-                        <div class="prose prose-sm text-slate-500 mb-8 whitespace-pre-line leading-relaxed">
-                            ${item.desc || 'Tidak ada deskripsi tambahan.'}
+                        <p class="text-2xl font-black text-indigo-600 mb-6">${item.price}</p>
+                        
+                        <div class="prose prose-sm text-slate-500 mb-8 border-t border-slate-100 pt-6">
+                            <p class="font-black text-slate-400 uppercase text-[9px] tracking-[0.2em] mb-3">Deskripsi Produk</p>
+                            <div class="whitespace-pre-line leading-relaxed text-sm">${item.desc || 'Tidak ada detail deskripsi untuk produk ini.'}</div>
                         </div>
-                        <a href="${item.link}" target="_blank" class="block w-full bg-indigo-600 text-white text-center py-4 rounded-2xl font-bold shadow-lg hover:bg-indigo-700 transition">Beli Sekarang</a>
+                        
+                        <a href="${item.link}" target="_blank" class="block w-full bg-indigo-600 text-white text-center py-5 rounded-[1.5rem] font-bold shadow-lg hover:bg-indigo-700 transition transform hover:scale-[1.02] active:scale-95 uppercase tracking-widest text-xs">Beli Sekarang</a>
                     </div>
                 </div>
             `;
@@ -163,51 +177,43 @@
         }
 
         function renderProducts(products) {
-    const container = document.getElementById('affiliate-grid');
-    let html = '';
-    
-    if (!products || products.length === 0) {
-        container.innerHTML = `<div class="col-span-full text-center py-20 opacity-40"><p class="text-xs font-bold uppercase tracking-widest">Tidak ada produk.</p></div>`;
-        return;
-    }
+            const container = document.getElementById('affiliate-grid');
+            let html = '';
+            
+            if (!products || products.length === 0) {
+                container.innerHTML = `<div class="col-span-full text-center py-20 opacity-40"><p class="text-xs font-bold uppercase tracking-widest">Produk tidak ditemukan.</p></div>`;
+                return;
+            }
 
-    products.forEach((item, index) => {
-        const ratingHtml = item.rate ? `
-            <div class="flex items-center gap-1 mb-2">
-                <span class="text-yellow-400 text-[10px]">⭐</span>
-                <span class="text-[10px] font-bold text-slate-500">${item.rate}</span>
-            </div>` : '';
+            products.forEach((item, index) => {
+                const ratingHtml = item.rate ? `<div class="flex items-center gap-1 mb-2"><span class="text-yellow-400 text-[10px]">⭐</span><span class="text-[10px] font-bold text-slate-500">${item.rate}</span></div>` : '';
+                const brandHtml = item.brand ? `<p class="text-[9px] font-black text-indigo-400 uppercase tracking-[0.1em] mb-1">${item.brand}</p>` : '';
 
-        // Label Merk jika ada
-        const brandHtml = item.brand ? `<p class="text-[10px] font-black text-indigo-500/50 uppercase tracking-widest mb-1">${item.brand}</p>` : '';
-
-        html += `
-            <div onclick="openModal('${item.title}')" class="group cursor-pointer bg-white border border-slate-100 rounded-[2.5rem] overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 animate__animated animate__fadeInUp" style="animation-delay: ${index * 0.05}s">
-                <div class="aspect-square overflow-hidden bg-slate-50 relative">
-                    <img src="${item.image}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                    <button onclick="shareProduct(event, '${item.link}')" class="absolute top-4 right-4 bg-white/90 backdrop-blur-md p-2 rounded-full shadow-sm hover:bg-indigo-600 hover:text-white transition-all duration-300 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 z-10">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6a3 3 0 100-2.684m0 2.684l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-                        </svg>
-                    </button>
-                </div>
-                <div class="p-6">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="px-3 py-1 bg-indigo-50 text-indigo-600 rounded-full text-[8px] font-black uppercase tracking-widest">${item.category || 'GEAR'}</span>
-                        <span class="text-[9px] font-bold text-slate-300 italic">${item.sub || ''}</span>
-                    </div>
-                    ${brandHtml}
-                    <h3 class="font-bold text-slate-800 text-sm mb-1 leading-tight line-clamp-2">${item.title}</h3>
-                    ${ratingHtml}
-                    <div class="flex justify-between items-center pt-4 border-t border-slate-50 mt-2">
-                        <span class="font-black text-slate-900 text-sm">${item.price}</span>
-                        <span class="text-indigo-600 text-[10px] font-bold uppercase tracking-widest">Detail →</span>
-                    </div>
-                </div>
-            </div>`;
-    });
-    container.innerHTML = html;
-}
+                html += `
+                    <div onclick="openModal('${item.title}')" class="group cursor-pointer bg-white border border-slate-100 rounded-[2.5rem] overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 animate__animated animate__fadeInUp" style="animation-delay: ${index * 0.05}s">
+                        <div class="aspect-square overflow-hidden bg-slate-50 relative">
+                            <img src="${item.image}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            <button onclick="shareProduct(event, '${item.link}')" class="absolute top-4 right-4 bg-white/90 backdrop-blur-md p-2 rounded-full shadow-sm hover:bg-indigo-600 hover:text-white transition-all duration-300 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 z-10">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6a3 3 0 100-2.684m0 2.684l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" /></svg>
+                            </button>
+                        </div>
+                        <div class="p-7">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="px-3 py-1 bg-indigo-50 text-indigo-600 rounded-full text-[8px] font-black uppercase tracking-widest">${item.category || 'GEAR'}</span>
+                                <span class="text-[9px] font-bold text-slate-300 italic">${item.sub || ''}</span>
+                            </div>
+                            ${brandHtml}
+                            <h3 class="font-bold text-slate-800 text-sm mb-1 leading-tight line-clamp-2">${item.title}</h3>
+                            ${ratingHtml}
+                            <div class="flex justify-between items-center pt-5 border-t border-slate-50 mt-3">
+                                <span class="font-black text-slate-900 text-sm">${item.price}</span>
+                                <span class="text-indigo-600 text-[9px] font-black uppercase tracking-widest">Detail →</span>
+                            </div>
+                        </div>
+                    </div>`;
+            });
+            container.innerHTML = html;
+        }
 
         window.onload = fetchAffiliate;
     </script>
