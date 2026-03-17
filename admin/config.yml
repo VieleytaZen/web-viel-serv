@@ -18,9 +18,18 @@ collections:
     fields:
       - {label: "Nama Produk", name: "title", widget: "string"}
       - {label: "Harga", name: "price", widget: "string"}
-      - {label: "Kategori", name: "category", widget: "select", options: ["Digital", "Pakaian", "Aksesoris"]}
-      - {label: "Sub-Kategori", name: "sub", widget: "select", options: ["Hp", "Laptop", "Aksesoris", "Baju", "Hoodie"]}
-      - {label: "Link Shopee", name: "link", widget: "string"}
+      
+      # Kategori & Sub-Kategori dibuat 'string' agar bebas ketik (Contoh: Celana)
+      - {label: "Kategori Utama", name: "category", widget: "string", hint: "Contoh: Digital, Pakaian, Aksesoris", required: false}
+      - {label: "Sub-Kategori", name: "sub", widget: "string", hint: "Contoh: Celana, Software, Mouse", required: false}
+      
+      # Tambahan Rate Produk
+      - {label: "Rate Produk (1-5)", name: "rate", widget: "number", value_type: "float", min: 1, max: 5, step: 0.1, required: false}
+      
+      # Deskripsi Produk Kompleks
+      - {label: "Deskripsi Produk", name: "desc", widget: "markdown", required: false}
+      
+      - {label: "Link Shopee/Affiliate", name: "link", widget: "string"}
       - {label: "Foto Produk", name: "image", widget: "image"}
 
   - name: "jasa_coding"
