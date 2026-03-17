@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 | Lost in the Digital Void - Viel Digital</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0f172a; overflow: hidden; }
+        
+        /* Gradient Background Void ala Space */
+        .bg-void { background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%); }
+
+        /* =========================================
+           SUPER ANIMATIVE PURE CSS GHOST STYLING
+           ========================================= */
+        .ghost-container {
+            position: relative;
+            width: 160px;
+            height: 250px;
+            margin: 0 auto;
+        }
+
+        /* Badan Hantu (Gradasi & Glowing) */
+        .ghost-body {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 80%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(99, 102, 241, 0.5) 100%);
+            border-radius: 80px 80px 0 0;
+            box-shadow: 
+                0 25px 50px -10px rgba(99, 102, 241, 0.4), /* Outer Glow */
+                inset 0 10px 20px rgba(255, 255, 255, 0.5), /* Inner Light */
+                inset 0 -15px 30px rgba(79, 70, 229, 0.2); /* Inner Shadow */
+            backdrop-filter: blur(2px);
+            z-index: 2; /* Di depan tangan */
+        }
+
+        /* -----------------------------------------
+           BARU: TANGAN HANTU (MELAMBAI)
+           ----------------------------------------- */
+        .ghost-hand {
+            position: absolute;
+            top: 45%; /* Posisi di samping badan */
+            left: -25px; /* Sedikit keluar dari badan */
+            width: 40px;
+            height: 50px;
+            /* Warna gradasi indigo transparan senada ekor */
+            background: linear-gradient(to bottom, rgba(99, 102, 241, 0.6) 0%, rgba(79, 70, 229, 0.2) 100%);
+            border-radius: 20px; /* Jari-jari bulat */
+            z-index: 1; /* Di belakang badan */
+            transform-origin: top right; /* Titik putar lambaian */
+            
+            /* ANIMASI LAMBAIAN: Jalankan 1 detik, 1 kali, saat dimuat */
+            animation: waveHand 1.2s ease-in-out 1;
+        }
+
+        /* Animasi Lambaian Tangan */
+        @keyframes waveHand {
+            0% { transform: rotate(0deg); }
+            20% { transform: rotate(-30deg); } /* Lambaian pertama */
+            40% { transform: rotate(10deg); } /* Lambaian kedua */
+            60% { transform: rotate(-30deg); } /* Lambaian ketiga */
+            80% { transform: rotate(0deg); } /* Kembali */
+            100% { transform: rotate(0deg); } /* Diam */
+        }
+
+        /* Container Ekor/Rumbai Hantu (Wave Effect) */
+        .ghost-feet {
+            position: absolute;
+            bottom: -20px;
+            left: 0; width: 100%; height: 30%;
+            display: flex;
+            z-index: -1;
+        }
+        .foot {
+            flex: 1;
+            background: linear-gradient(to bottom, rgba(99, 102, 241, 0.5) 0%, rgba(79, 70, 229, 0.1) 100%);
+            border-radius: 0 0 25px 25px;
+            transform-origin: top;
+            animation: waveFeet 1.5s ease-in-out infinite;
+        }
+        .foot:nth-child(even) { animation-delay: 0.2s; }
+        .foot:nth-child(odd) { animation-delay: 0.4s; }
+        
+        /* Animasi Wave untuk Ekor */
+        @keyframes waveFeet {
+            0%, 100% { transform: scaleY(1) translateY(0); }
+            50% { transform: scaleY(1.2) translateY(5px); }
+        }
+
+        /* Container Mata */
+        .eyes-wrap {
+            position: absolute;
+            top: 42%; left: 22%; width: 56%; height: 18%;
+            display: flex;
+            justify-content: space-between;
+            z-index: 3; /* Di paling depan */
+        }
+
+        /* Lubang Mata (Socket) */
+        .eye-socket {
+            width: 34px; height: 34px;
+            background: #1e293b;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Pupil Mata (Pure CSS) */
+        .pupil {
+            width: 18px; height: 18px;
+            background: #ffffff;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            transition: transform 0.05s ease-out; /* Pergerakan super haluss */
+            box-shadow: 0 0 10px #ffffff; /* Pupil "Glowing" */
+        }
+    </style>
+</head>
+<body class="bg-void text-white h-screen flex items-center justify-center p-6 relative">
+
+    <div id="particles-js" class="fixed inset-0 z-0 opacity-20"></div>
+
+    <div class="relative z-10 text-center max-w-lg animate__animated animate__fadeIn">
+        
+        <div class="ghost-container mb-6 animate__animated animate__floating animate__infinite animate__slow">
+            <div class="ghost-hand"></div>
+            
+            <div class="ghost-body">
+                <div class="eyes-wrap">
+                    <div class="eye-socket">
+                        <div class="pupil" id="pupil-l"></div>
+                    </div>
+                    <div class="eye-socket">
+                        <div class="pupil" id="pupil-r"></div>
+                    </div>
+                </div>
+                <div class="ghost-feet">
+                    <div class="foot"></div>
+                    <div class="foot"></div>
+                    <div class="foot"></div>
+                    <div class="foot"></div>
+                </div>
+            </div>
+        </div>
+
+        <h1 class="text-[10rem] md:text-[14rem] font-black leading-none tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-indigo-500/20 to-transparent select-none">
+            404
+        </h1>
+        
+        <div class="mt-[-4rem]">
+            <h2 class="text-3xl font-extrabold mb-4 tracking-tight">Ups! <span class="text-indigo-400">Dimana kita?</span></h2>
+            <p class="text-slate-400 mb-10 leading-relaxed text-sm max-w-md mx-auto">
+                Hantu digital Viel Service sepertinya juga bingung. Halaman ini hilang di telan void atau linknya yang typo.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="/index.html" class="bg-indigo-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-indigo-700 transition transform hover:scale-105 shadow-lg shadow-indigo-500/20">
+                    Balik ke Home
+                </a>
+                <a href="/jasa/affiliate/index.html" class="bg-slate-800 text-white px-8 py-4 rounded-2xl font-bold border border-slate-700 hover:border-indigo-500 transition-all duration-300">
+                    Cek Produk Setup
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // 1. Partikel Background Senada Home
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 30, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#6366f1" },
+                "shape": { "type": "circle" },
+                "size": { "value": 2 },
+                "line_linked": { "enable": true, "distance": 150, "color": "#6366f1", "opacity": 0.03, "width": 1 },
+                "move": { "enable": true, "speed": 0.2 }
+            }
+        });
+
+        // 2. LOGIKA MATA PINTAR (Desktop + Mobile)
+        const pupilL = document.getElementById('pupil-l');
+        const pupilR = document.getElementById('pupil-r');
+        const maxMove = 6; 
+
+        let idleTimer;
+        let isIdle = true;
+
+        // Fungsi untuk menggerakkan mata
+        function moveEyes(x, y) {
+            const transformStyle = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+            pupilL.style.transform = transformStyle;
+            pupilR.style.transform = transformStyle;
+        }
+
+        // A. Logika Desktop (Mouse Move)
+        document.addEventListener('mousemove', (e) => {
+            isIdle = false;
+            clearTimeout(idleTimer);
+
+            const { clientX, clientY } = e;
+            const { innerWidth, innerHeight } = window;
+
+            const xPct = (clientX / innerWidth) * 2 - 1; 
+            const yPct = (clientY / innerHeight) * 2 - 1;
+
+            moveEyes(xPct * maxMove, yPct * maxMove);
+
+            // Jika mouse berhenti bergerak selama 3 detik, aktifkan mode idle/lirik otomatis
+            idleTimer = setTimeout(() => { isIdle = true; }, 3000);
+        });
+
+        // B. Logika Mobile & Idle (Lirik Otomatis)
+        function autoLookAround() {
+            if (isIdle) {
+                // Cari koordinat acak antara -maxMove sampai +maxMove
+                const randomX = (Math.random() * 2 - 1) * maxMove;
+                const randomY = (Math.random() * 2 - 1) * maxMove;
+                
+                moveEyes(randomX, randomY);
+            }
+            
+            // Ulangi gerakan acak setiap 1.5 - 3 detik
+            const randomTime = Math.floor(Math.random() * 1500) + 1500;
+            setTimeout(autoLookAround, randomTime);
+        }
+
+        // Jalankan lirik otomatis pertama kali
+        autoLookAround();
+    </script>
+</body>
+</html>
