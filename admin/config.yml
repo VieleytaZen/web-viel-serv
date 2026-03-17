@@ -1,14 +1,15 @@
 backend:
-  name: github
-  repo: VieleytaZen/web-viel-serv
+  name: git-gateway
   branch: main
 
+# Penting untuk pengerjaan di localhost
 local_backend: true
 
 media_folder: "assets/img"
 public_folder: "/assets/img"
 
-- name: "affiliate"
+collections:
+  - name: "affiliate"
     label: "🛒 Produk Affiliate"
     folder: "jasa/affiliate/items"
     extension: "json"
@@ -18,15 +19,15 @@ public_folder: "/assets/img"
       - {label: "Nama Produk", name: "title", widget: "string"}
       - {label: "Harga", name: "price", widget: "string"}
       
-      # Field Merk Baru
+      # Field Merk dengan pilihan & bisa input manual
       - label: "Merk / Brand"
         name: "brand"
         widget: "select"
         options: ["Apple", "Samsung", "Logitech", "Nike", "Adidas", "Uniqlo", "Sony"]
         allow_add: true
         required: false
-        hint: "Pilih merk atau ketik merk baru"
 
+      # Kategori Utama
       - label: "Kategori Utama"
         name: "category"
         widget: "select"
@@ -34,15 +35,27 @@ public_folder: "/assets/img"
         allow_add: true
         required: false
 
+      # Sub-Kategori (Sekarang bisa ketik manual untuk tambah 'Celana', dll)
       - label: "Sub-Kategori"
         name: "sub"
         widget: "select"
         options: ["Celana", "Baju", "Hoodie", "Software", "Laptop", "Hp", "Aksesoris"]
         allow_add: true
         required: false
-      
-      - {label: "Rate Produk (1-5)", name: "rate", widget: "number", value_type: "float", min: 1, max: 5, step: 0.1, required: false}
+
+      # Rating Desimal
+      - label: "Rate Produk (1-5)"
+        name: "rate"
+        widget: "number"
+        value_type: "float"
+        min: 1
+        max: 5
+        step: 0.1
+        required: false
+
+      # Deskripsi Markdown (Bisa dikosongkan)
       - {label: "Deskripsi Produk", name: "desc", widget: "markdown", required: false}
+      
       - {label: "Link Shopee/Affiliate", name: "link", widget: "string"}
       - {label: "Foto Produk", name: "image", widget: "image"}
 
