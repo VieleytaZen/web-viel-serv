@@ -8,8 +8,7 @@ local_backend: true
 media_folder: "assets/img"
 public_folder: "/assets/img"
 
-collections:
-  - name: "affiliate"
+- name: "affiliate"
     label: "🛒 Produk Affiliate"
     folder: "jasa/affiliate/items"
     extension: "json"
@@ -19,16 +18,31 @@ collections:
       - {label: "Nama Produk", name: "title", widget: "string"}
       - {label: "Harga", name: "price", widget: "string"}
       
-      # Kategori & Sub-Kategori dibuat 'string' agar bebas ketik (Contoh: Celana)
-      - {label: "Kategori Utama", name: "category", widget: "string", hint: "Contoh: Digital, Pakaian, Aksesoris", required: false}
-      - {label: "Sub-Kategori", name: "sub", widget: "string", hint: "Contoh: Celana, Software, Mouse", required: false}
+      # Field Merk Baru
+      - label: "Merk / Brand"
+        name: "brand"
+        widget: "select"
+        options: ["Apple", "Samsung", "Logitech", "Nike", "Adidas", "Uniqlo", "Sony"]
+        allow_add: true
+        required: false
+        hint: "Pilih merk atau ketik merk baru"
+
+      - label: "Kategori Utama"
+        name: "category"
+        widget: "select"
+        options: ["Digital", "Pakaian", "Aksesoris"]
+        allow_add: true
+        required: false
+
+      - label: "Sub-Kategori"
+        name: "sub"
+        widget: "select"
+        options: ["Celana", "Baju", "Hoodie", "Software", "Laptop", "Hp", "Aksesoris"]
+        allow_add: true
+        required: false
       
-      # Tambahan Rate Produk
       - {label: "Rate Produk (1-5)", name: "rate", widget: "number", value_type: "float", min: 1, max: 5, step: 0.1, required: false}
-      
-      # Deskripsi Produk Kompleks
       - {label: "Deskripsi Produk", name: "desc", widget: "markdown", required: false}
-      
       - {label: "Link Shopee/Affiliate", name: "link", widget: "string"}
       - {label: "Foto Produk", name: "image", widget: "image"}
 
