@@ -12,5 +12,16 @@
     // Opsional: Script tambahan jika ingin kustomisasi preview
     CMS.registerPreviewStyle("https://cdn.tailwindcss.com");
   </script>
+  <style>
+
+    /* Menghias teks Markdown di editor agar lebih terbaca */
+    .view-content h1 { color: #6366f1 !important; border-bottom: 2px solid #1e293b; padding-bottom: 10px; }
+    .view-content h3 { color: #818cf8 !important; margin-top: 20px; }
+    .view-content code { background: #0f172a; padding: 2px 6px; border-radius: 4px; color: #fb7185; }
+    
+    /* Membuat sidebar lebih lebar untuk ikon emoji */
+    [class^="CMS_Sidebar_sidebarCard"] span { font-size: 13px !important; font-weight: 600 !important; }
+</style>
+
 </body>
 </html>
