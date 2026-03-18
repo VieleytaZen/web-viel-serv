@@ -126,3 +126,21 @@ collections:
         file: "admin/README_ADMIN.md"
         fields:
           - {label: "Isi Panduan", name: "body", widget: "markdown"}
+  
+  - name: "projects"
+    label: "📊 Project Tracker"
+    folder: "jasa/projects"
+    extension: "json"
+    create: true
+    slug: "{{order_id}}"
+    fields:
+      - {label: "Order ID (Contoh: VIEL-001)", name: "order_id", widget: "string"}
+      - {label: "Nama Client", name: "client_name", widget: "string"}
+      - {label: "Nama Project", name: "title", widget: "string"}
+      - label: "Status Project"
+        name: "status"
+        widget: "select"
+        options: ["Queue", "Research", "Coding", "Testing", "Deployment", "Done"]
+      - {label: "Progress (%)", name: "progress", widget: "number", min: 0, max: 100}
+      - {label: "Estimasi Selesai", name: "eta", widget: "string", hint: "Contoh: 25 Maret 2026"}
+      - {label: "Catatan Progress", name: "note", widget: "string", required: false}
