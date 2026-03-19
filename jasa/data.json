@@ -10,12 +10,19 @@
     },
     {
       "id": "bot-dev",
-      "title": "Jasa Pembuatan Bot 🤖",
-      "desc": "Automasi Telegram/WhatsApp.",
-      "detail": "Auto-reply, Database, Maintenance.",
-      "price": "Mulai Rp 300k",
+      "title": "Jasa Pembuatan Bot WhatsApp",
+      "desc": "Automasi Bot yang berjalan 24Jam dengan fitur umum",
+      "detail": "Auto-reply, Database, Maintenance , Game , Downloader , Maker",
+      "price": "Mulai Rp 20k",
+      "waLink": "https://wa.me/6282133692292"
+    },
+    {
+      "id": "bot-dev",
+      "title": "Jasa pembuatan Script Bot Store",
+      "desc": "Script bot dengan konfigurasi nama store.",
+      "detail": "Paket fitur yang di dapat :\n1. Custom nama bot (full Access)\n2. Fitur Grub (hidetag, kick, add, auto respon buyer)\n3. Sub Menu produk\n4. Fitur push kontak (JPM, Push Kontak, Export Kontak)\n5. Garansi Maintenance 10* (30 Hari)",
+      "price": "Harga 40k",
       "waLink": "https://wa.me/6282133692292"
     }
-
   ]
 }
