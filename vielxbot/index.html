@@ -92,48 +92,45 @@
         });
     });
 
-    // FUNGSI AMBIL DATA (DENGAN PROXY ALLORIGINS)
     function fetchData() {
-        const proxyUrl = 'https://api.allorigins.win/get?url=';
-        const targetUrl = encodeURIComponent(WEB_APP_URL);
+    const tableBody = document.getElementById('tableBody');
+    
+    // Langsung panggil WEB_APP_URL tanpa proxy
+    fetch(WEB_APP_URL) 
+    .then(res => {
+        if (!res.ok) throw new Error('Network error');
+        return res.json();
+    })
+    .then(data => {
+        tableBody.innerHTML = '';
+        if (!data || data.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center">Belum ada data.</td></tr>';
+            return;
+        }
 
-        fetch(proxyUrl + targetUrl + '&cache=' + new Date().getTime())
-        .then(res => res.json())
-        .then(data => {
-            const rawData = JSON.parse(data.contents);
-            const tbody = document.getElementById('tableBody');
-            tbody.innerHTML = '';
-            
-            if (!rawData || rawData.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">Belum ada data laporan.</td></tr>';
-                return;
-            }
+        data.forEach(row => {
+            let statusText = row[5] || 'Menunggu';
+            let stClass = 'st-menunggu';
+            const s = statusText.toLowerCase();
+            if(s.includes('tolak')) stClass = 'st-ditolak';
+            else if(s.includes('tarik')) stClass = 'st-tertarik';
+            else if(s.includes('bayar')) stClass = 'st-sudahbayar';
+            else if(s.includes('trial')) stClass = 'st-taketrial';
 
-            rawData.forEach(row => {
-                let statusText = row[5] || 'Menunggu';
-                let stClass = 'st-menunggu';
-                const s = statusText.toLowerCase();
-                
-                if(s.includes('tolak')) stClass = 'st-ditolak';
-                else if(s.includes('tarik')) stClass = 'st-tertarik';
-                else if(s.includes('bayar')) stClass = 'st-sudahbayar';
-                else if(s.includes('trial')) stClass = 'st-taketrial';
-
-                tbody.innerHTML += `<tr>
-                    <td>${row[0]}</td>
-                    <td><b>${row[1]}</b></td>
-                    <td>${row[2]}</td>
-                    <td><span class="status ${stClass}">${statusText}</span></td>
-                </tr>`;
-            });
-        })
-        .catch(err => {
-            document.getElementById('tableBody').innerHTML = '<tr><td colspan="4" style="text-align:center;color:red">Gagal memuat. Periksa koneksi.</td></tr>';
+            tableBody.innerHTML += `<tr>
+                <td>${row[0]}</td>
+                <td><b>${row[1]}</b></td>
+                <td>${row[2]}</td>
+                <td><span class="status ${stClass}">${statusText}</span></td>
+            </tr>`;
         });
-    }
-
-    // Jalankan pertama kali
-    fetchData();
+    })
+    .catch(err => {
+        console.error('Fetch error:', err);
+        // Jika gagal karena CORS lagi, kita berikan instruksi manual
+        tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:red">Gagal memuat. Tekan CTRL+F5 atau cek koneksi.</td></tr>';
+    });
+}
 </script>
 
 </body>
