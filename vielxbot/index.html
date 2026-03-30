@@ -125,41 +125,46 @@
     });
 
     function fetchData() {
-        fetch(WEB_APP_URL)
-        .then(res => res.json())
-        .then(data => {
-            const tbody = document.getElementById('tableBody');
-            tbody.innerHTML = '';
+    // Menambahkan parameter redirect: 'follow' untuk mengatasi masalah CORS pada Google Apps Script
+    fetch(WEB_APP_URL, {
+        method: 'GET',
+        redirect: 'follow' 
+    })
+    .then(res => res.json())
+    .then(data => {
+        const tbody = document.getElementById('tableBody');
+        tbody.innerHTML = '';
+        
+        if (!data || data.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="4" class="loader">Belum ada data laporan.</td></tr>';
+            return;
+        }
+
+        data.forEach(row => {
+            let statusText = row[5] || 'Menunggu';
+            let stClass = 'st-menunggu';
             
-            if (data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" class="loader">Belum ada data laporan.</td></tr>';
-                return;
-            }
+            const s = statusText.toLowerCase();
+            if(s.includes('tolak')) stClass = 'st-ditolak';
+            else if(s.includes('tarik')) stClass = 'st-tertarik';
+            else if(s.includes('bayar')) stClass = 'st-sudahbayar';
+            else if(s.includes('trial')) stClass = 'st-taketrial';
 
-            data.forEach(row => {
-                let statusText = row[5] || 'Menunggu';
-                let stClass = 'st-menunggu';
-                
-                const s = statusText.toLowerCase();
-                if(s.includes('tolak')) stClass = 'st-ditolak';
-                else if(s.includes('tarik')) stClass = 'st-tertarik';
-                else if(s.includes('bayar')) stClass = 'st-sudahbayar';
-                else if(s.includes('trial')) stClass = 'st-taketrial';
-
-                tbody.innerHTML += `
-                    <tr>
-                        <td>${row[0]}</td>
-                        <td><strong>${row[1]}</strong></td>
-                        <td>${row[2]}</td>
-                        <td><span class="status ${stClass}">${statusText}</span></td>
-                    </tr>
-                `;
-            });
+            tbody.innerHTML += `
+                <tr>
+                    <td>${row[0]}</td>
+                    <td><strong>${row[1]}</strong></td>
+                    <td>${row[2]}</td>
+                    <td><span class="status ${stClass}">${statusText}</span></td>
+                </tr>
+            `;
         });
-    }
-
-    // Ambil data saat halaman dibuka
-    fetchData();
+    })
+    .catch(err => {
+        console.error('Error fetching data:', err);
+        document.getElementById('tableBody').innerHTML = '<tr><td colspan="4" class="loader" style="color:red">Gagal memuat data. Cek koneksi atau URL.</td></tr>';
+    });
+}
 </script>
 
 </body>
