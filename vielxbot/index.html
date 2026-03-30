@@ -62,13 +62,54 @@
 </div>
 
 <script>
-    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyisI1WWaDx0PFq-PGoKsgzlU6_J2gz0WwzW4qrekgxyu8GCL9zueCh5dvXBrPJ0WT3SA/exec';
+    const WEB_APP_URL = 'URL_WEB_APP_BARU_KAMU'; // Pastikan akhiran /exec
 
-    // FUNGSI SIMPAN DATA
+    function fetchData() {
+        const tableBody = document.getElementById('tableBody');
+        
+        fetch(WEB_APP_URL)
+        .then(res => res.json())
+        .then(data => {
+            tableBody.innerHTML = '';
+            
+            // Cek jika data kosong atau bukan array
+            if (!data || data.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center">Data di Google Sheets masih kosong (Baris 10 kebawah)</td></tr>';
+                return;
+            }
+
+            data.forEach(row => {
+                let statusText = row[5] || 'Menunggu';
+                let stClass = 'st-menunggu';
+                const s = statusText.toString().toLowerCase();
+                
+                if(s.includes('tolak')) stClass = 'st-ditolak';
+                else if(s.includes('tarik')) stClass = 'st-tertarik';
+                else if(s.includes('bayar')) stClass = 'st-sudahbayar';
+                else if(s.includes('trial')) stClass = 'st-taketrial';
+
+                tableBody.innerHTML += `<tr>
+                    <td>${row[0]}</td>
+                    <td><b>${row[1]}</b></td>
+                    <td>${row[2]}</td>
+                    <td><span class="status ${stClass}">${statusText}</span></td>
+                </tr>`;
+            });
+        })
+        .catch(err => {
+            console.error('Error:', err);
+            tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:red">Gagal terhubung ke Google Sheets.</td></tr>';
+        });
+    }
+
+    // Panggil saat load
+    fetchData();
+
+    // Form submit tetap sama
     document.getElementById('marketingForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const btn = document.getElementById('submitBtn');
-        btn.innerText = 'Sedang Mengirim...';
+        btn.innerText = 'Mengirim...';
         btn.disabled = true;
 
         const payload = {
@@ -84,53 +125,10 @@
             mode: 'no-cors',
             body: JSON.stringify(payload)
         }).then(() => {
-            alert('Sukses Terkirim!');
-            document.getElementById('marketingForm').reset();
-            btn.innerText = 'SIMPAN DATA KE SHEET';
-            btn.disabled = false;
-            setTimeout(fetchData, 2000); // Tunggu 2 detik baru refresh tabel
+            alert('Data Terkirim! Refresh halaman untuk melihat update.');
+            location.reload(); // Refresh otomatis agar data muncul
         });
     });
-
-    function fetchData() {
-    const tableBody = document.getElementById('tableBody');
-    
-    // Langsung panggil WEB_APP_URL tanpa proxy
-    fetch(WEB_APP_URL) 
-    .then(res => {
-        if (!res.ok) throw new Error('Network error');
-        return res.json();
-    })
-    .then(data => {
-        tableBody.innerHTML = '';
-        if (!data || data.length === 0) {
-            tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center">Belum ada data.</td></tr>';
-            return;
-        }
-
-        data.forEach(row => {
-            let statusText = row[5] || 'Menunggu';
-            let stClass = 'st-menunggu';
-            const s = statusText.toLowerCase();
-            if(s.includes('tolak')) stClass = 'st-ditolak';
-            else if(s.includes('tarik')) stClass = 'st-tertarik';
-            else if(s.includes('bayar')) stClass = 'st-sudahbayar';
-            else if(s.includes('trial')) stClass = 'st-taketrial';
-
-            tableBody.innerHTML += `<tr>
-                <td>${row[0]}</td>
-                <td><b>${row[1]}</b></td>
-                <td>${row[2]}</td>
-                <td><span class="status ${stClass}">${statusText}</span></td>
-            </tr>`;
-        });
-    })
-    .catch(err => {
-        console.error('Fetch error:', err);
-        // Jika gagal karena CORS lagi, kita berikan instruksi manual
-        tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:red">Gagal memuat. Tekan CTRL+F5 atau cek koneksi.</td></tr>';
-    });
-}
 </script>
 
 </body>
