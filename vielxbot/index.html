@@ -5,23 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Input Data Closer - Viel</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; padding: 15px; margin: 0; }
-        .container { max-width: 800px; margin: auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        h2 { color: #0b5394; border-left: 5px solid #0b5394; padding-left: 15px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; padding: 15px; margin: 0; color: #333; }
+        .container { max-width: 850px; margin: auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h2 { color: #0b5394; font-size: 1.5rem; margin-bottom: 20px; border-left: 5px solid #0b5394; padding-left: 15px; }
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
-        input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
-        button { background: #0b5394; color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; margin-top: 20px; }
-        .status { padding: 5px 12px; border-radius: 20px; font-size: 11px; color: white; font-weight: bold; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.85rem; color: #555; }
+        input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
+        button { background: #0b5394; color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; margin-top: 15px; }
+        button:disabled { background: #ccc; }
+        .status { padding: 4px 10px; border-radius: 20px; font-size: 10px; color: white; font-weight: bold; text-transform: uppercase; }
         .st-menunggu { background: #999; }
         .st-tertarik { background: #a4c2f4; color: #1155cc !important; }
         .st-ditolak { background: #cc0000; }
         .st-sudahbayar { background: #3c78d8; }
         .st-taketrial { background: #783f04; }
-        .table-container { overflow-x: auto; margin-top: 35px; }
-        table { width: 100%; border-collapse: collapse; min-width: 500px; }
-        th { background: #f8f9fa; padding: 12px; text-align: left; border-bottom: 2px solid #dee2e6; }
-        td { padding: 15px 12px; border-bottom: 1px solid #eee; }
+        .table-container { overflow-x: auto; margin-top: 30px; }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        th { background: #f8f9fa; padding: 12px; text-align: left; font-size: 12px; border-bottom: 2px solid #dee2e6; color: #666; }
+        td { padding: 12px; border-bottom: 1px solid #eee; font-size: 13px; }
     </style>
 </head>
 <body>
@@ -30,12 +32,15 @@
     <h2>Laporan Tim Scout & Closer</h2>
     <form id="marketingForm">
         <div class="form-grid">
-            <input type="text" id="namaCloser" placeholder="Nama CLOSER" required>
-            <input type="text" id="namaGrup" placeholder="Nama Grup / User" required>
-            <input type="text" id="linkWa" placeholder="Link / No. WA" required>
-            <input type="number" id="jumlahMember" placeholder="Jumlah Member" required>
+            <div><label>Nama CLOSER</label><input type="text" id="namaCloser" placeholder="Misal: JEN" required></div>
+            <div><label>Nama Grup / User</label><input type="text" id="namaGrup" placeholder="Grup WA/Tele" required></div>
+            <div><label>Link / No. WA</label><input type="text" id="linkWa" placeholder="https://chat.whatsapp..." required></div>
+            <div><label>Jumlah Member</label><input type="number" id="jumlahMember" placeholder="Angka saja" required></div>
         </div>
-        <textarea id="catatan" rows="3" placeholder="Catatan..." style="margin-top:15px"></textarea>
+        <div style="margin-top:15px">
+            <label>Catatan</label>
+            <textarea id="catatan" rows="2" placeholder="Tambahkan keterangan..."></textarea>
+        </div>
         <button type="submit" id="submitBtn">SIMPAN DATA KE SHEET</button>
     </form>
 
@@ -57,9 +62,9 @@
 </div>
 
 <script>
-    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbx8GXUQ2MMw3GyZJpYIf7CP82-BIQ0e3BL0XjuZrtJalSRAbCgzO7oLIn4al_BaNiYwtw/exec';
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyisI1WWaDx0PFq-PGoKsgzlU6_J2gz0WwzW4qrekgxyu8GCL9zueCh5dvXBrPJ0WT3SA/exec';
 
-    // FUNGSI KIRIM DATA
+    // FUNGSI SIMPAN DATA
     document.getElementById('marketingForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const btn = document.getElementById('submitBtn');
@@ -83,25 +88,32 @@
             document.getElementById('marketingForm').reset();
             btn.innerText = 'SIMPAN DATA KE SHEET';
             btn.disabled = false;
-            fetchData();
+            setTimeout(fetchData, 2000); // Tunggu 2 detik baru refresh tabel
         });
     });
 
-    // FUNGSI AMBIL DATA
+    // FUNGSI AMBIL DATA (DENGAN PROXY ALLORIGINS)
     function fetchData() {
-        fetch(WEB_APP_URL, { redirect: 'follow' })
+        const proxyUrl = 'https://api.allorigins.win/get?url=';
+        const targetUrl = encodeURIComponent(WEB_APP_URL);
+
+        fetch(proxyUrl + targetUrl + '&cache=' + new Date().getTime())
         .then(res => res.json())
         .then(data => {
+            const rawData = JSON.parse(data.contents);
             const tbody = document.getElementById('tableBody');
             tbody.innerHTML = '';
-            if (!data || data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">Belum ada data.</td></tr>';
+            
+            if (!rawData || rawData.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">Belum ada data laporan.</td></tr>';
                 return;
             }
-            data.forEach(row => {
+
+            rawData.forEach(row => {
                 let statusText = row[5] || 'Menunggu';
                 let stClass = 'st-menunggu';
                 const s = statusText.toLowerCase();
+                
                 if(s.includes('tolak')) stClass = 'st-ditolak';
                 else if(s.includes('tarik')) stClass = 'st-tertarik';
                 else if(s.includes('bayar')) stClass = 'st-sudahbayar';
@@ -114,13 +126,14 @@
                     <td><span class="status ${stClass}">${statusText}</span></td>
                 </tr>`;
             });
-        }).catch(err => {
+        })
+        .catch(err => {
             document.getElementById('tableBody').innerHTML = '<tr><td colspan="4" style="text-align:center;color:red">Gagal memuat. Periksa koneksi.</td></tr>';
         });
     }
 
-    // Panggil fungsi saat halaman pertama kali dibuka
-    fetchData(); 
+    // Jalankan pertama kali
+    fetchData();
 </script>
 
 </body>
