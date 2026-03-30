@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Data Closer - Viel</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; padding: 20px; color: #333; }
+        .card { max-width: 850px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        h2 { color: #0b5394; font-size: 20px; margin-bottom: 20px; display: flex; align-items: center; }
+        h2::before { content: ''; width: 5px; height: 25px; background: #0b5394; margin-right: 10px; border-radius: 10px; }
+        
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
+        input:focus { border-color: #0b5394; outline: none; }
+        
+        button { background: #0b5394; color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; margin-top: 15px; transition: 0.3s; }
+        button:hover { background: #073763; }
+        button:disabled { background: #ccc; }
+
+        /* Status Badges */
+        .status { padding: 4px 12px; border-radius: 20px; font-size: 11px; color: white; font-weight: bold; text-transform: uppercase; }
+        .st-menunggu { background: #999; }
+        .st-tertarik { background: #a4c2f4; color: #1155cc; } /* Biru Muda */
+        .st-ditolak { background: #cc0000; } /* Merah */
+        .st-sudahbayar { background: #3c78d8; } /* Biru Tua */
+        .st-taketrial { background: #783f04; } /* Cokelat */
+
+        .table-wrapper { overflow-x: auto; margin-top: 30px; }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        th { background: #f8f9fa; color: #666; font-size: 12px; padding: 12px; text-align: left; border-bottom: 2px solid #dee2e6; }
+        td { padding: 15px 12px; border-bottom: 1px solid #eee; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Form Laporan Tim Scout & Closer</h2>
+    <form id="mainForm">
+        <div class="grid">
+            <input type="text" id="namaCloser" placeholder="Nama CLOSER (Contoh: JEN)" required>
+            <input type="text" id="namaGrup" placeholder="Nama Grup / User" required>
+            <input type="text" id="linkWa" placeholder="Link / No. WA" required>
+            <input type="number" id="jumlahMember" placeholder="Jumlah Member" required>
+        </div>
+        <textarea id="catatan" placeholder="Tambahkan catatan di sini..." rows="3" style="margin-top:15px"></textarea>
+        <button type="submit" id="btnSubmit">SIMPAN KE GOOGLE SHEETS</button>
+    </form>
+
+    <div class="table-wrapper">
+        <table id="dataTable">
+            <thead>
+                <tr>
+                    <th>TANGGAL</th>
+                    <th>CLOSER</th>
+                    <th>GRUP / USER</th>
+                    <th>STATUS</th>
+                </tr>
+            </thead>
+            <tbody>
+                </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    const API_URL = 'https://script.google.com/macros/s/AKfycbxb60xGzBGcO-aiOSRto13EN8vub3J4kPXZnzWaH6OEFB0WadigUpT92eQSm7HV2NbX0w/exec'; // Masukkan URL Deployment Apps Script di sini
+
+    document.getElementById('mainForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const btn = document.getElementById('btnSubmit');
+        btn.innerText = 'Sedang Menyimpan...';
+        btn.disabled = true;
+
+        const payload = {
+            namaCloser: document.getElementById('namaCloser').value,
+            namaGrup: document.getElementById('namaGrup').value,
+            linkWa: document.getElementById('linkWa').value,
+            jumlahMember: document.getElementById('jumlahMember').value,
+            catatan: document.getElementById('catatan').value
+        };
+
+        fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) })
+        .then(() => {
+            alert('Mantap! Data sudah masuk ke Sheet.');
+            btn.innerText = 'SIMPAN KE GOOGLE SHEETS';
+            btn.disabled = false;
+            document.getElementById('mainForm').reset();
+            loadData();
+        })
+        .catch(() => alert('Waduh, ada kendala saat mengirim data.'));
+    });
+
+    function loadData() {
+        fetch(API_URL)
+        .then(res => res.json())
+        .then(data => {
+            const tbody = document.querySelector('#dataTable tbody');
+            tbody.innerHTML = '';
+            data.forEach(row => {
+                let stClass = 'st-menunggu';
+                const s = row[5] ? row[5].toString().toLowerCase() : '';
+                
+                if(s.includes('tolak')) stClass = 'st-ditolak';
+                if(s.includes('tarik')) stClass = 'st-tertarik';
+                if(s.includes('bayar')) stClass = 'st-sudahbayar';
+                if(s.includes('trial')) stClass = 'st-taketrial';
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${row[0]}</td>
+                        <td><strong>${row[1]}</strong></td>
+                        <td>${row[2]}</td>
+                        <td><span class="status ${stClass}">${row[5] || 'Menunggu'}</span></td>
+                    </tr>
+                `;
+            });
+        });
+    }
+
+    loadData();
+</script>
+
+</body>
+</html>
