@@ -5,71 +5,95 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Input Data Closer - Viel</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; padding: 20px; color: #333; }
-        .card { max-width: 850px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        h2 { color: #0b5394; font-size: 20px; margin-bottom: 20px; display: flex; align-items: center; }
-        h2::before { content: ''; width: 5px; height: 25px; background: #0b5394; margin-right: 10px; border-radius: 10px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; padding: 15px; margin: 0; color: #333; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h2 { color: #0b5394; font-size: 1.5rem; margin-bottom: 20px; border-left: 5px solid #0b5394; padding-left: 15px; }
         
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
-        input:focus { border-color: #0b5394; outline: none; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
         
-        button { background: #0b5394; color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; margin-top: 15px; transition: 0.3s; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9rem; color: #555; }
+        input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 1rem; }
+        input:focus, textarea:focus { border-color: #0b5394; outline: none; background: #fdfdfd; }
+        
+        button { background: #0b5394; color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; margin-top: 20px; transition: 0.3s; }
         button:hover { background: #073763; }
-        button:disabled { background: #ccc; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
 
-        /* Status Badges */
-        .status { padding: 4px 12px; border-radius: 20px; font-size: 11px; color: white; font-weight: bold; text-transform: uppercase; }
+        /* Status Badge Styling */
+        .status { padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; color: white; font-weight: bold; text-transform: uppercase; white-space: nowrap; }
         .st-menunggu { background: #999; }
-        .st-tertarik { background: #a4c2f4; color: #1155cc; } /* Biru Muda */
-        .st-ditolak { background: #cc0000; } /* Merah */
-        .st-sudahbayar { background: #3c78d8; } /* Biru Tua */
-        .st-taketrial { background: #783f04; } /* Cokelat */
+        .st-tertarik { background: #a4c2f4; color: #1155cc !important; }
+        .st-ditolak { background: #cc0000; }
+        .st-sudahbayar { background: #3c78d8; }
+        .st-taketrial { background: #783f04; }
 
-        .table-wrapper { overflow-x: auto; margin-top: 30px; }
-        table { width: 100%; border-collapse: collapse; min-width: 600px; }
-        th { background: #f8f9fa; color: #666; font-size: 12px; padding: 12px; text-align: left; border-bottom: 2px solid #dee2e6; }
-        td { padding: 15px 12px; border-bottom: 1px solid #eee; font-size: 14px; }
+        .table-container { overflow-x: auto; margin-top: 35px; border-top: 2px solid #eee; padding-top: 20px; }
+        table { width: 100%; border-collapse: collapse; min-width: 500px; }
+        th { background: #f8f9fa; color: #666; font-size: 0.8rem; padding: 12px; text-align: left; text-transform: uppercase; border-bottom: 2px solid #dee2e6; }
+        td { padding: 15px 12px; border-bottom: 1px solid #eee; font-size: 0.95rem; }
+        .loader { text-align: center; color: #999; font-style: italic; padding: 20px; }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <h2>Form Laporan Tim Scout & Closer</h2>
-    <form id="mainForm">
-        <div class="grid">
-            <input type="text" id="namaCloser" placeholder="Nama CLOSER (Contoh: JEN)" required>
-            <input type="text" id="namaGrup" placeholder="Nama Grup / User" required>
-            <input type="text" id="linkWa" placeholder="Link / No. WA" required>
-            <input type="number" id="jumlahMember" placeholder="Jumlah Member" required>
+<div class="container">
+    <h2>Laporan Tim Scout & Closer</h2>
+    
+    <form id="marketingForm">
+        <div class="form-grid">
+            <div>
+                <label>Nama CLOSER</label>
+                <input type="text" id="namaCloser" placeholder="Misal: JEN" required>
+            </div>
+            <div>
+                <label>Nama Grup / User</label>
+                <input type="text" id="namaGrup" placeholder="Nama Grup WA/Tele" required>
+            </div>
+            <div>
+                <label>Link / No. WA</label>
+                <input type="text" id="linkWa" placeholder="https://chat.whatsapp..." required>
+            </div>
+            <div>
+                <label>Jumlah Member</label>
+                <input type="number" id="jumlahMember" placeholder="Angka saja" required>
+            </div>
         </div>
-        <textarea id="catatan" placeholder="Tambahkan catatan di sini..." rows="3" style="margin-top:15px"></textarea>
-        <button type="submit" id="btnSubmit">SIMPAN KE GOOGLE SHEETS</button>
+        <div style="margin-top:15px">
+            <label>Catatan</label>
+            <textarea id="catatan" rows="3" placeholder="Tambahkan keterangan jika ada..."></textarea>
+        </div>
+        <button type="submit" id="submitBtn">SIMPAN DATA KE SHEET</button>
     </form>
 
-    <div class="table-wrapper">
-        <table id="dataTable">
+    <div class="table-container">
+        <h3 style="font-size:1.1rem; color:#666">Status Laporan Terkini</h3>
+        <table id="statusTable">
             <thead>
                 <tr>
                     <th>TANGGAL</th>
                     <th>CLOSER</th>
-                    <th>GRUP / USER</th>
+                    <th>GRUP/USER</th>
                     <th>STATUS</th>
                 </tr>
             </thead>
-            <tbody>
-                </tbody>
+            <tbody id="tableBody">
+                <tr><td colspan="4" class="loader">Memuat data...</td></tr>
+            </tbody>
         </table>
     </div>
 </div>
 
 <script>
-    const API_URL = 'https://script.google.com/macros/s/AKfycbxb60xGzBGcO-aiOSRto13EN8vub3J4kPXZnzWaH6OEFB0WadigUpT92eQSm7HV2NbX0w/exec'; // Masukkan URL Deployment Apps Script di sini
+    // GANTI DENGAN URL WEB APP KAMU
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzVJHleiK6UaPkTe45g_n3CU6f1pUiEUYxfrpmTyADkaBCW7A1z1If8LWx5_55OokzqjA/exec'; 
 
-    document.getElementById('mainForm').addEventListener('submit', function(e) {
+    const form = document.getElementById('marketingForm');
+    const btn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', function(e) {
         e.preventDefault();
-        const btn = document.getElementById('btnSubmit');
-        btn.innerText = 'Sedang Menyimpan...';
+        btn.innerText = 'Sedang Mengirim...';
         btn.disabled = true;
 
         const payload = {
@@ -80,45 +104,63 @@
             catatan: document.getElementById('catatan').value
         };
 
-        fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) })
-        .then(() => {
-            alert('Mantap! Data sudah masuk ke Sheet.');
-            btn.innerText = 'SIMPAN KE GOOGLE SHEETS';
-            btn.disabled = false;
-            document.getElementById('mainForm').reset();
-            loadData();
+        // Kirim data ke Google Sheets
+        fetch(WEB_APP_URL, {
+            method: 'POST',
+            mode: 'no-cors', // Menghindari masalah CORS
+            cache: 'no-cache',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
         })
-        .catch(() => alert('Waduh, ada kendala saat mengirim data.'));
+        .then(() => {
+            alert('Sukses! Data telah dikirim.');
+            form.reset();
+            btn.innerText = 'SIMPAN DATA KE SHEET';
+            btn.disabled = false;
+            fetchData(); // Refresh tabel
+        })
+        .catch(err => {
+            alert('Terjadi kesalahan!');
+            btn.disabled = false;
+        });
     });
 
-    function loadData() {
-        fetch(API_URL)
+    function fetchData() {
+        fetch(WEB_APP_URL)
         .then(res => res.json())
         .then(data => {
-            const tbody = document.querySelector('#dataTable tbody');
+            const tbody = document.getElementById('tableBody');
             tbody.innerHTML = '';
+            
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" class="loader">Belum ada data laporan.</td></tr>';
+                return;
+            }
+
             data.forEach(row => {
+                let statusText = row[5] || 'Menunggu';
                 let stClass = 'st-menunggu';
-                const s = row[5] ? row[5].toString().toLowerCase() : '';
                 
+                const s = statusText.toLowerCase();
                 if(s.includes('tolak')) stClass = 'st-ditolak';
-                if(s.includes('tarik')) stClass = 'st-tertarik';
-                if(s.includes('bayar')) stClass = 'st-sudahbayar';
-                if(s.includes('trial')) stClass = 'st-taketrial';
+                else if(s.includes('tarik')) stClass = 'st-tertarik';
+                else if(s.includes('bayar')) stClass = 'st-sudahbayar';
+                else if(s.includes('trial')) stClass = 'st-taketrial';
 
                 tbody.innerHTML += `
                     <tr>
                         <td>${row[0]}</td>
                         <td><strong>${row[1]}</strong></td>
                         <td>${row[2]}</td>
-                        <td><span class="status ${stClass}">${row[5] || 'Menunggu'}</span></td>
+                        <td><span class="status ${stClass}">${statusText}</span></td>
                     </tr>
                 `;
             });
         });
     }
 
-    loadData();
+    // Ambil data saat halaman dibuka
+    fetchData();
 </script>
 
 </body>
