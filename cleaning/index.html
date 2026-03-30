@@ -9,97 +9,184 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        
+        /* Modern Sidebar Menu */
+        #mobile-menu-overlay { 
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            backdrop-filter: blur(0px);
+        }
+        #mobile-menu-overlay.open {
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(8px);
+        }
+        .menu-panel {
+            transform: translateX(100%);
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        #mobile-menu-overlay.open .menu-panel {
+            transform: translateX(0);
+        }
+
+        /* Staggered Animation for Links */
+        .menu-link { opacity: 0; transform: translateY(20px); transition: all 0.4s ease; }
+        #mobile-menu-overlay.open .menu-link { opacity: 1; transform: translateY(0); }
+        #mobile-menu-overlay.open .link-1 { transition-delay: 0.2s; }
+        #mobile-menu-overlay.open .link-2 { transition-delay: 0.3s; }
+        #mobile-menu-overlay.open .link-3 { transition-delay: 0.4s; }
+        #mobile-menu-overlay.open .link-4 { transition-delay: 0.5s; }
     </style>
 </head>
 <body class="bg-[#f8fafc] text-slate-900">
-    <nav class="sticky top-0 z-[100] py-4 bg-white/80 backdrop-blur-md border-b">
+
+    <div id="mobile-menu-overlay" class="fixed inset-0 z-[300] pointer-events-none flex justify-end">
+        <div onclick="toggleMenu()" class="absolute inset-0 cursor-pointer"></div>
+        
+        <div class="menu-panel w-[85%] md:w-[400px] h-full bg-white shadow-[-20px_0_50px_rgba(0,0,0,0.05)] p-12 flex flex-col pointer-events-auto relative">
+            <button onclick="toggleMenu()" class="absolute top-8 right-8 p-2 text-slate-400 hover:text-blue-600 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            <div class="mt-20 space-y-10">
+                <div class="menu-link link-1">
+                    <p class="text-[10px] font-black text-blue-600 uppercase tracking-[0.3em] mb-4">Navigation</p>
+                    <button onclick="filterCleaning('all')" class="text-4xl font-black hover:text-blue-600 transition text-left block">Semua Jasa</button>
+                </div>
+                
+                <div class="menu-link link-2">
+                    <button onclick="filterCleaning('deep')" class="text-4xl font-black hover:text-blue-600 transition text-left block">Premium Only</button>
+                </div>
+
+                <div class="menu-link link-3 border-t border-slate-100 pt-10">
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-4">Discovery</p>
+                    <a href="data/index.html" class="text-4xl font-black hover:text-blue-600 transition block">About this</a>
+                </div>
+
+                <div class="menu-link link-4 mt-auto">
+                    <a href="../index.html" class="inline-flex items-center gap-2 font-bold text-slate-400 hover:text-blue-600 transition">
+                        <span>←</span> Back to Hub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="sticky top-0 z-[100] py-4 bg-white/80 backdrop-blur-md border-b border-slate-100">
         <div class="max-w-6xl mx-auto px-6 flex justify-between items-center">
-            <a href="../index.html" class="font-bold text-slate-500 hover:text-blue-600 text-sm transition">← Kembali</a>
-            <span class="text-xl font-extrabold text-blue-600">KostClean</span>
-            <div class="w-10"></div>
+            <a href="../index.html" class="font-bold text-slate-400 hover:text-blue-600 text-sm transition">← Kembali</a>
+            <span class="text-xl font-black italic tracking-tighter text-blue-600 uppercase">KostClean.</span>
+            
+            <button onclick="toggleMenu()" class="group space-y-1.5 p-2 bg-blue-50 rounded-xl transition-all hover:bg-blue-100">
+                <div class="w-6 h-0.5 bg-blue-600 rounded-full group-hover:w-4 transition-all"></div>
+                <div class="w-6 h-0.5 bg-blue-600 rounded-full"></div>
+                <div class="w-4 h-0.5 bg-blue-600 rounded-full group-hover:w-6 transition-all"></div>
+            </button>
         </div>
     </nav>
 
     <header class="py-24 text-center px-6 animate__animated animate__fadeIn">
-        <h2 class="text-5xl font-extrabold mb-6 leading-tight">Kost Bersih, <br><span class="text-blue-600 bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">Istirahat Jadi Puas.</span></h2>
-        <p class="text-slate-500 text-sm uppercase tracking-[0.3em] font-bold">Layanan Kebersihan Viel Service</p>
+        <h2 id="header-title" class="text-5xl font-extrabold mb-6 leading-tight tracking-tighter">Kost Bersih, <br><span class="text-blue-600 bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">Istirahat Jadi Puas.</span></h2>
+        <p class="text-slate-400 text-[10px] uppercase tracking-[0.4em] font-black">Professional Cleaning Service</p>
     </header>
 
     <section class="max-w-6xl mx-auto py-12 px-6">
-        <div id="cleaning-grid" class="grid md:grid-cols-3 gap-8">
-            </div>
+        <div id="cleaning-grid" class="grid md:grid-cols-3 gap-8"></div>
     </section>
 
-    <div id="modal-cleaning" class="fixed inset-0 bg-slate-900/60 z-[200] hidden flex items-center justify-center p-4 backdrop-blur-md">
-        <div class="bg-white rounded-[2.5rem] max-w-lg w-full p-10 relative shadow-2xl animate__animated animate__zoomIn">
-            <button onclick="closeCleaningModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-900 text-3xl transition">&times;</button>
+    <div id="modal-cleaning" class="fixed inset-0 bg-slate-900/40 z-[200] hidden flex items-center justify-center p-4 backdrop-blur-md">
+        <div class="bg-white rounded-[3rem] max-w-lg w-full p-10 relative shadow-2xl animate__animated animate__zoomIn">
+            <button onclick="closeCleaningModal()" class="absolute top-8 right-8 text-slate-300 hover:text-slate-900 text-3xl transition">&times;</button>
             <div id="cleaning-content"></div>
             <div class="mt-10">
-                <a id="cleaning-cta" href="#" target="_blank" class="block w-full bg-blue-600 hover:bg-blue-700 text-white py-5 rounded-2xl font-extrabold text-center shadow-lg shadow-blue-200 transition transform hover:scale-[1.02]">Pesan via WhatsApp</a>
+                <a id="cleaning-cta" href="#" target="_blank" class="block w-full bg-blue-600 hover:bg-blue-700 text-white py-5 rounded-2xl font-black uppercase tracking-widest text-xs text-center shadow-xl shadow-blue-200 transition transform hover:scale-[1.02]">Pesan Sekarang</a>
             </div>
         </div>
     </div>
 
     <script>
-        window.cleaningData = [];
+        window.allCleaningData = [];
 
-        async function renderCleaning() {
-            const container = document.getElementById('cleaning-grid');
-            try {
-                // Anti-cache agar data CMS langsung update
-                const response = await fetch('data.json?v=' + Date.now());
-                if (!response.ok) throw new Error("Data tidak ditemukan");
-                
-                const data = await response.json();
-                window.cleaningData = data.cleaning || [];
-
-                let html = '';
-                window.cleaningData.forEach((item, index) => {
-                    // Pengaman ID agar tidak error saat pengecekan .includes
-                    const safeId = (item.id || "clean").toLowerCase();
-                    const isDeep = safeId.includes('deep');
-                    
-                    html += `
-                        <div class="service-card p-10 rounded-[2.5rem] transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 animate__animated animate__fadeInUp shadow-sm" 
-                             style="animation-delay: ${index * 0.1}s; ${isDeep ? 'background-color: #2563eb; color: white;' : 'background-color: white; border: 1px solid #f1f5f9;'}">
-                            <div class="mb-6">
-                                <span class="text-[10px] font-black uppercase tracking-widest ${isDeep ? 'text-blue-200' : 'text-blue-600'}">${isDeep ? 'Premium Choice' : 'Regular Service'}</span>
-                            </div>
-                            <h3 class="text-2xl font-extrabold mb-4">${item.title || 'Layanan Bersih'}</h3>
-                            <p class="${isDeep ? 'text-blue-100' : 'text-slate-500'} mb-8 leading-relaxed text-sm">${item.desc || ''}</p>
-                            <div class="text-3xl font-black mb-8">${item.price || 'TBA'}</div>
-                            <button onclick="openCleaningModalJSON('${item.id}')" 
-                                    class="w-full py-4 rounded-2xl font-bold transition-all ${isDeep ? 'bg-white text-blue-600 hover:bg-blue-50' : 'bg-slate-900 text-white hover:bg-slate-800'}">
-                                Detail Layanan
-                            </button>
-                        </div>`;
-                });
-                container.innerHTML = html || "<p class='col-span-full text-center text-slate-400 py-10 uppercase tracking-widest text-xs font-bold'>Belum ada paket cleaning tersedia.</p>";
-            } catch (e) { 
-                console.error("Gagal memuat data cleaning:", e);
-                container.innerHTML = "<p class='col-span-full text-center text-red-500 py-10 font-bold'>Gagal memuat database layanan.</p>";
+        function toggleMenu() {
+            const overlay = document.getElementById('mobile-menu-overlay');
+            const isOpen = overlay.classList.contains('open');
+            
+            if (isOpen) {
+                overlay.classList.remove('open');
+                overlay.style.pointerEvents = 'none';
+                document.body.style.overflow = 'auto';
+            } else {
+                overlay.classList.add('open');
+                overlay.style.pointerEvents = 'auto';
+                document.body.style.overflow = 'hidden';
             }
         }
 
+        async function fetchCleaningData() {
+            try {
+                const response = await fetch('data.json?v=' + Date.now());
+                const data = await response.json();
+                window.allCleaningData = data.cleaning || [];
+                renderCleaning(window.allCleaningData);
+            } catch (e) { console.error(e); }
+        }
+
+        function filterCleaning(type) {
+            toggleMenu();
+            let filtered = window.allCleaningData;
+            if (type === 'deep') {
+                filtered = window.allCleaningData.filter(item => item.id.toLowerCase().includes('deep'));
+                document.getElementById('header-title').innerHTML = "Layanan <br><span class='text-blue-600'>Premium.</span>";
+            } else {
+                document.getElementById('header-title').innerHTML = "Kost Bersih, <br><span class='text-blue-600'>Istirahat Jadi Puas.</span>";
+            }
+            renderCleaning(filtered);
+        }
+
+        function renderCleaning(dataToRender) {
+            const container = document.getElementById('cleaning-grid');
+            let html = '';
+            dataToRender.forEach((item, index) => {
+                const safeId = (item.id || "clean").toLowerCase();
+                const isDeep = safeId.includes('deep');
+                html += `
+                    <div class="service-card p-10 rounded-[2.5rem] transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 animate__animated animate__fadeInUp shadow-sm" 
+                         style="animation-delay: ${index * 0.1}s; ${isDeep ? 'background-color: #2563eb; color: white;' : 'background-color: white; border: 1px solid #f1f5f9;'}">
+                        <div class="mb-6 flex justify-between items-start">
+                            <span class="text-[10px] font-black uppercase tracking-widest ${isDeep ? 'text-blue-200' : 'text-blue-600'}">${isDeep ? 'Premium' : 'Regular'}</span>
+                            <span class="text-2xl">${isDeep ? '💎' : '🧼'}</span>
+                        </div>
+                        <h3 class="text-2xl font-black mb-4 tracking-tighter">${item.title || 'Layanan'}</h3>
+                        <p class="${isDeep ? 'text-blue-100' : 'text-slate-400'} mb-8 leading-relaxed text-sm font-medium">${item.desc || ''}</p>
+                        <div class="text-3xl font-black mb-8 italic tracking-tighter">${item.price || 'TBA'}</div>
+                        <button onclick="openCleaningModalJSON('${item.id}')" 
+                                class="w-full py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all ${isDeep ? 'bg-white text-blue-600 hover:bg-blue-50' : 'bg-slate-900 text-white hover:bg-slate-800'}">
+                            Lihat Detail
+                        </button>
+                    </div>`;
+            });
+            container.innerHTML = html || "<p class='col-span-full text-center'>Data tidak ditemukan.</p>";
+        }
+
         function openCleaningModalJSON(id) {
-            const item = window.cleaningData.find(c => c.id === id);
+            const item = window.allCleaningData.find(c => c.id === id);
             if(item) {
                 document.getElementById('cleaning-content').innerHTML = `
                     <div class="text-blue-600 text-[10px] font-black uppercase tracking-[0.3em] mb-4">Service Detail</div>
-                    <h2 class="text-3xl font-black mb-6 text-slate-900">${item.title}</h2>
-                    <div class="text-left bg-slate-50 p-6 rounded-2xl text-slate-600 text-sm leading-relaxed whitespace-pre-line border border-slate-100">${item.detail || 'Tidak ada detail untuk paket ini.'}</div>`;
-                document.getElementById('cleaning-cta').href = item.waLink || 'https://wa.me/628...';
+                    <h2 class="text-3xl font-black mb-6 text-slate-900 tracking-tighter">${item.title}</h2>
+                    <div class="text-left bg-slate-50 p-6 rounded-[2rem] text-slate-500 text-sm leading-relaxed whitespace-pre-line border border-slate-100">${item.detail || ''}</div>`;
+                document.getElementById('cleaning-cta').href = item.waLink || '#';
                 document.getElementById('modal-cleaning').classList.remove('hidden');
-                document.body.style.overflow = 'hidden'; // Lock scroll
+                document.body.style.overflow = 'hidden';
             }
         }
 
         function closeCleaningModal() { 
             document.getElementById('modal-cleaning').classList.add('hidden'); 
-            document.body.style.overflow = 'auto'; // Unlock scroll
+            document.body.style.overflow = 'auto';
         }
 
-        document.addEventListener('DOMContentLoaded', renderCleaning);
+        document.addEventListener('DOMContentLoaded', fetchCleaningData);
     </script>
 </body>
 </html>

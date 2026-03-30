@@ -7,6 +7,7 @@ local_backend: true
 media_folder: "assets/img"
 public_folder: "/assets/img"
 
+# Mengaktifkan fitur pencarian global di admin panel
 search: true
 
 collections:
@@ -16,16 +17,15 @@ collections:
     extension: "json"
     create: true
     slug: "{{title}}"
+    summary: "{{title}} ({{brand}}) - {{price}}" # Memudahkan melihat list produk
     fields:
       - {label: "Nama Produk", name: "title", widget: "string"}
       - {label: "Harga", name: "price", widget: "string"}
-      
       - label: "Jenis Produk (Kategori)"
         name: "category"
         widget: "select"
         options: ["Digital", "Pakaian", "Aksesoris"]
         required: true
-
       - label: "Merk / Brand"
         name: "brand"
         widget: "select"
@@ -51,7 +51,6 @@ collections:
         allow_add: true 
         required: false
         hint: "Pilih merk sesuai jenis produk di atas"
-
       - label: "Sub-Kategori"
         name: "sub"
         widget: "select"
@@ -73,7 +72,6 @@ collections:
           - "Charger"
         allow_add: true
         required: false
-
       - {label: "Rate Produk (1-5)", name: "rate", widget: "number", value_type: "float", min: 1, max: 5, step: 0.1, required: false}
       - {label: "Deskripsi Produk", name: "desc", widget: "markdown", required: false}
       - {label: "Link Shopee/Affiliate", name: "link", widget: "string"}
@@ -89,8 +87,9 @@ collections:
           - name: "digital"
             label: "List Jasa"
             widget: "list"
+            summary: "{{title}} - {{price}}"
             fields:
-              - {label: "ID (Penting: web-dev/bot-dev)", name: "id", widget: "string"}
+              - {label: "ID (Penting: web-dev/bot-dev/landing-page)", name: "id", widget: "string"}
               - {label: "Title", name: "title", widget: "string"}
               - {label: "Desc Singkat", name: "desc", widget: "string"}
               - {label: "Detail (HTML)", name: "detail", widget: "text"}
@@ -107,6 +106,7 @@ collections:
           - name: "cleaning"
             label: "List Cleaning"
             widget: "list"
+            summary: "{{title}} - {{price}}"
             fields:
               - {label: "ID", name: "id", widget: "string"}
               - {label: "Title", name: "title", widget: "string"}
@@ -115,24 +115,13 @@ collections:
               - {label: "Price", name: "price", widget: "string"}
               - {label: "Link WA", name: "waLink", widget: "string"}
 
-  - name: "docs"
-    label: "📚 Panduan Admin"
-    delete: false # Supaya tidak terhapus tidak sengaja
-    editor:
-      preview: false
-    files:
-      - label: "Cara Pakai Admin"
-        name: "manual"
-        file: "admin/README_ADMIN.md"
-        fields:
-          - {label: "Isi Panduan", name: "body", widget: "markdown"}
-  
   - name: "projects"
     label: "📊 Project Tracker"
     folder: "jasa/projects"
     extension: "json"
     create: true
     slug: "{{order_id}}"
+    summary: "[{{status}}] {{order_id}} - {{client_name}}"
     fields:
       - {label: "Order ID (Contoh: VIEL-001)", name: "order_id", widget: "string"}
       - {label: "Nama Client", name: "client_name", widget: "string"}
@@ -144,3 +133,15 @@ collections:
       - {label: "Progress (%)", name: "progress", widget: "number", min: 0, max: 100}
       - {label: "Estimasi Selesai", name: "eta", widget: "string", hint: "Contoh: 25 Maret 2026"}
       - {label: "Catatan Progress", name: "note", widget: "string", required: false}
+
+  - name: "docs"
+    label: "📚 Panduan Admin"
+    delete: false
+    editor:
+      preview: false
+    files:
+      - label: "Cara Pakai Admin"
+        name: "manual"
+        file: "admin/README_ADMIN.md"
+        fields:
+          - {label: "Isi Panduan", name: "body", widget: "markdown"}
