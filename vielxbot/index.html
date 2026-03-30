@@ -5,69 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Input Data Closer - Viel</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; padding: 15px; margin: 0; color: #333; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; padding: 15px; margin: 0; }
         .container { max-width: 800px; margin: auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        h2 { color: #0b5394; font-size: 1.5rem; margin-bottom: 20px; border-left: 5px solid #0b5394; padding-left: 15px; }
-        
+        h2 { color: #0b5394; border-left: 5px solid #0b5394; padding-left: 15px; }
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
-        
-        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9rem; color: #555; }
-        input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 1rem; }
-        input:focus, textarea:focus { border-color: #0b5394; outline: none; background: #fdfdfd; }
-        
-        button { background: #0b5394; color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; margin-top: 20px; transition: 0.3s; }
-        button:hover { background: #073763; }
-        button:disabled { background: #ccc; cursor: not-allowed; }
-
-        /* Status Badge Styling */
-        .status { padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; color: white; font-weight: bold; text-transform: uppercase; white-space: nowrap; }
+        input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        button { background: #0b5394; color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; margin-top: 20px; }
+        .status { padding: 5px 12px; border-radius: 20px; font-size: 11px; color: white; font-weight: bold; }
         .st-menunggu { background: #999; }
         .st-tertarik { background: #a4c2f4; color: #1155cc !important; }
         .st-ditolak { background: #cc0000; }
         .st-sudahbayar { background: #3c78d8; }
         .st-taketrial { background: #783f04; }
-
-        .table-container { overflow-x: auto; margin-top: 35px; border-top: 2px solid #eee; padding-top: 20px; }
+        .table-container { overflow-x: auto; margin-top: 35px; }
         table { width: 100%; border-collapse: collapse; min-width: 500px; }
-        th { background: #f8f9fa; color: #666; font-size: 0.8rem; padding: 12px; text-align: left; text-transform: uppercase; border-bottom: 2px solid #dee2e6; }
-        td { padding: 15px 12px; border-bottom: 1px solid #eee; font-size: 0.95rem; }
-        .loader { text-align: center; color: #999; font-style: italic; padding: 20px; }
+        th { background: #f8f9fa; padding: 12px; text-align: left; border-bottom: 2px solid #dee2e6; }
+        td { padding: 15px 12px; border-bottom: 1px solid #eee; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h2>Laporan Tim Scout & Closer</h2>
-    
     <form id="marketingForm">
         <div class="form-grid">
-            <div>
-                <label>Nama CLOSER</label>
-                <input type="text" id="namaCloser" placeholder="Misal: JEN" required>
-            </div>
-            <div>
-                <label>Nama Grup / User</label>
-                <input type="text" id="namaGrup" placeholder="Nama Grup WA/Tele" required>
-            </div>
-            <div>
-                <label>Link / No. WA</label>
-                <input type="text" id="linkWa" placeholder="https://chat.whatsapp..." required>
-            </div>
-            <div>
-                <label>Jumlah Member</label>
-                <input type="number" id="jumlahMember" placeholder="Angka saja" required>
-            </div>
+            <input type="text" id="namaCloser" placeholder="Nama CLOSER" required>
+            <input type="text" id="namaGrup" placeholder="Nama Grup / User" required>
+            <input type="text" id="linkWa" placeholder="Link / No. WA" required>
+            <input type="number" id="jumlahMember" placeholder="Jumlah Member" required>
         </div>
-        <div style="margin-top:15px">
-            <label>Catatan</label>
-            <textarea id="catatan" rows="3" placeholder="Tambahkan keterangan jika ada..."></textarea>
-        </div>
+        <textarea id="catatan" rows="3" placeholder="Catatan..." style="margin-top:15px"></textarea>
         <button type="submit" id="submitBtn">SIMPAN DATA KE SHEET</button>
     </form>
 
     <div class="table-container">
-        <h3 style="font-size:1.1rem; color:#666">Status Laporan Terkini</h3>
         <table id="statusTable">
             <thead>
                 <tr>
@@ -78,20 +50,19 @@
                 </tr>
             </thead>
             <tbody id="tableBody">
-                <tr><td colspan="4" class="loader">Memuat data...</td></tr>
+                <tr><td colspan="4" style="text-align:center">Memuat data...</td></tr>
             </tbody>
         </table>
     </div>
 </div>
 
 <script>
-    // GANTI DENGAN URL WEB APP KAMU
     const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbx8GXUQ2MMw3GyZJpYIf7CP82-BIQ0e3BL0XjuZrtJalSRAbCgzO7oLIn4al_BaNiYwtw/exec';
-    const form = document.getElementById('marketingForm');
-    const btn = document.getElementById('submitBtn');
 
-    form.addEventListener('submit', function(e) {
+    // FUNGSI KIRIM DATA
+    document.getElementById('marketingForm').addEventListener('submit', function(e) {
         e.preventDefault();
+        const btn = document.getElementById('submitBtn');
         btn.innerText = 'Sedang Mengirim...';
         btn.disabled = true;
 
@@ -103,68 +74,53 @@
             catatan: document.getElementById('catatan').value
         };
 
-        // Kirim data ke Google Sheets
         fetch(WEB_APP_URL, {
             method: 'POST',
-            mode: 'no-cors', // Menghindari masalah CORS
-            cache: 'no-cache',
-            headers: { 'Content-Type': 'application/json' },
+            mode: 'no-cors',
             body: JSON.stringify(payload)
-        })
-        .then(() => {
-            alert('Sukses! Data telah dikirim.');
-            form.reset();
+        }).then(() => {
+            alert('Sukses Terkirim!');
+            document.getElementById('marketingForm').reset();
             btn.innerText = 'SIMPAN DATA KE SHEET';
             btn.disabled = false;
-            fetchData(); // Refresh tabel
-        })
-        .catch(err => {
-            alert('Terjadi kesalahan!');
-            btn.disabled = false;
+            fetchData();
         });
     });
 
+    // FUNGSI AMBIL DATA
     function fetchData() {
-    // Menambahkan parameter redirect: 'follow' untuk mengatasi masalah CORS pada Google Apps Script
-    fetch(WEB_APP_URL, {
-        method: 'GET',
-        redirect: 'follow' 
-    })
-    .then(res => res.json())
-    .then(data => {
-        const tbody = document.getElementById('tableBody');
-        tbody.innerHTML = '';
-        
-        if (!data || data.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="4" class="loader">Belum ada data laporan.</td></tr>';
-            return;
-        }
+        fetch(WEB_APP_URL, { redirect: 'follow' })
+        .then(res => res.json())
+        .then(data => {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">Belum ada data.</td></tr>';
+                return;
+            }
+            data.forEach(row => {
+                let statusText = row[5] || 'Menunggu';
+                let stClass = 'st-menunggu';
+                const s = statusText.toLowerCase();
+                if(s.includes('tolak')) stClass = 'st-ditolak';
+                else if(s.includes('tarik')) stClass = 'st-tertarik';
+                else if(s.includes('bayar')) stClass = 'st-sudahbayar';
+                else if(s.includes('trial')) stClass = 'st-taketrial';
 
-        data.forEach(row => {
-            let statusText = row[5] || 'Menunggu';
-            let stClass = 'st-menunggu';
-            
-            const s = statusText.toLowerCase();
-            if(s.includes('tolak')) stClass = 'st-ditolak';
-            else if(s.includes('tarik')) stClass = 'st-tertarik';
-            else if(s.includes('bayar')) stClass = 'st-sudahbayar';
-            else if(s.includes('trial')) stClass = 'st-taketrial';
-
-            tbody.innerHTML += `
-                <tr>
+                tbody.innerHTML += `<tr>
                     <td>${row[0]}</td>
-                    <td><strong>${row[1]}</strong></td>
+                    <td><b>${row[1]}</b></td>
                     <td>${row[2]}</td>
                     <td><span class="status ${stClass}">${statusText}</span></td>
-                </tr>
-            `;
+                </tr>`;
+            });
+        }).catch(err => {
+            document.getElementById('tableBody').innerHTML = '<tr><td colspan="4" style="text-align:center;color:red">Gagal memuat. Periksa koneksi.</td></tr>';
         });
-    })
-    .catch(err => {
-        console.error('Error fetching data:', err);
-        document.getElementById('tableBody').innerHTML = '<tr><td colspan="4" class="loader" style="color:red">Gagal memuat data. Cek koneksi atau URL.</td></tr>';
-    });
-}
+    }
+
+    // Panggil fungsi saat halaman pertama kali dibuka
+    fetchData(); 
 </script>
 
 </body>
