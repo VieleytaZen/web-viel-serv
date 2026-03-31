@@ -5,24 +5,48 @@
       "title": "Paket Hemat ✨",
       "desc": "Pembersihan rutin standar untuk menjaga kamar kost tetap nyaman setiap hari.",
       "detail": "Rincian pengerjaan (±45 Menit):<br>• Sapu & Pel seluruh lantai<br>• Lap debu meja & kursi<br>• Merapikan tempat tidur<br>• Membuang sampah harian<br>• Semprot pengharum ruangan.",
-      "price": "Rp 25.000",
-      "waLink": "https://wa.me/6282133692292?text=Halo Jasa Clean, saya ingin pesan Paket Hemat"
+      "price": "Rp 35.000",
+      "waLink": "https://wa.me/6285161444491?text=Halo Jasa Clean, saya ingin pesan Paket Hemat"
     },
     {
       "id": "deep",
       "title": "Deep Cleaning 💎",
       "desc": "Pembersihan menyeluruh hingga ke noda membandel. Cocok untuk kamar yang lama tidak terurus.",
       "detail": "Rincian pengerjaan (±2-3 Jam):<br>• Sikat kerak lantai & dinding KM<br>• Pembersihan wastafel & kloset<br>• Lap kaca & jendela kamar<br>• Vacuum debu sela-sela kasur<br>• Pembersihan detail kipas/AC.",
-      "price": "Rp 75.000",
-      "waLink": "https://wa.me/6282133692292?text=Halo Jasa Clean, saya ingin pesan Paket Deep Clean"
+      "price": "Rp 110.000",
+      "waLink": "https://wa.me/62851444491?text=Halo Jasa Clean, saya ingin pesan Paket Deep Clean"
     },
     {
       "id": "pindah",
       "title": "Paket Pindahan 📦",
-      "desc": "Pembersihan total sebelum kamu masuk atau setelah keluar dari kamar kost.",
-      "detail": "Rincian pengerjaan:<br>• Semua fitur Deep Cleaning<br>• Pembersihan sisa-sisa barang/debu renovasi<br>• Disinfektan seluruh area<br>• Pengecekan fungsi lampu & air.",
-      "price": "Rp 120.000",
-      "waLink": "https://wa.me/6282133692292?text=Halo Jasa Clean, saya ingin pesan Paket Pindahan"
+      "desc": "Pembersihan total sebelum kamu masuk dan packing clean ringan sebelum keluar dari kamar kost.",
+      "detail": "Rincian pengerjaan:<br>• Semua fitur Deep Cleaning<br>• Pembersihan sisa-sisa barang/debu renovasi<br>• Disinfektan seluruh area<br>• Pengecekan fungsi lampu & air<br>• Packing sebelum pindahan (free kardus)",
+      "price": "Rp 175.000",
+      "waLink": "https://wa.me/6285161444491?text=Halo Jasa Clean, saya ingin pesan Paket Pindahan"
+    },
+    {
+      "id": "trad-ringan",
+      "title": "Paket Resik Sat-Set 🧹",
+      "desc": "Pembersihan manual harian yang praktis dan ekonomis. Cocok untuk perawatan rutin 2-3 hari sekali.",
+      "detail": "• Sapu & Pel seluruh lantai (manual).<br>• Lap debu permukaan meja & kursi.<br>• Membuang sampah harian.<br>• Merapikan tempat tidur (tanpa ganti sprei).<br>• Semprot pengharum ruangan.",
+      "price": "Rp 25.000",
+      "waLink": "https://wa.me/6285161444491?text=Halo Jasa Clean, saya ingin pesan Paket Paket Resik Sat-Set "
+    },
+    {
+      "id": "trad-lengkap",
+      "title": "Paket Tradisional Lengkap ✨",
+      "desc": "Pembersihan detail tanpa alat elektrik. Fokus pada kerapihan barang dan kebersihan area basah.",
+      "detail": "• Sapu & Pel manual hingga kolong lemari.<br>• Lap debu detail (rak buku, jendela, bingkai foto).<br>• Ganti Sprei (Klien menyediakan sprei bersih).<br>• Cuci Alat Makan (Maksimal 5 item: gelas/piring).<br>• Kuras bak mandi & sikat ringan lantai kamar mandi.<br>• Semprot pengharum \"Teh Keraton/Lavender\".",
+      "price": "60.000",
+      "waLink": "https://wa.me/6285161444491?text=Halo Jasa Clean, saya ingin pesan Paket Paket Tradisional Lengkap"
+    },
+    {
+      "title": "Paket Kinclong KM 🚽",
+      "id": "add on",
+      "desc": "Fokus pembersihan kerak kamar mandi agar kembali seperti baru.",
+      "detail": "•Sikat kerak lantai & dinding kamar mandi secara mendalam<br>•Pembersihan kloset, wastafel, dan kran air hingga mengkilap.<br>•Pembersihan bak mandi/ember.<br>•Estimasi pengerjaan: 45-60 menit.",
+      "price": "Rp 65.000",
+      "waLink": "https://wa.me/6285161444491?text=Halo Jasa Clean, saya ingin pesan Paket Paket Kinclong KM"
     }
   ]
 }
